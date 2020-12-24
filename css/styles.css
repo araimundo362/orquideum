@@ -1,0 +1,6 @@
+.frameClass {
+  border: none; }
+
+.buttonContainer {
+  display: flex;
+  justify-content: center; }
