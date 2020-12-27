@@ -1,0 +1,32 @@
+.headerFaqs {
+    &__div {
+        display: flex;
+        align-items: flex-end;
+
+        &__img {
+            height: 260px;
+            width: 100%;
+        }
+    }
+
+    &__title {
+        position: absolute;
+        color: maroon;
+        margin-left: 10px;
+
+        font-size: 45px;
+        margin-bottom: 0;
+    }
+}
+
+.faqsMain {
+    background-color: rgba(0,0,0,.03);
+
+    &__acordionContainer {
+        padding: 25px;
+    }
+
+    &__customizeCard {
+        border: none !important;
+    }
+}

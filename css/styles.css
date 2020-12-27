@@ -4,3 +4,24 @@
 .buttonContainer {
   display: flex;
   justify-content: center; }
+
+.headerFaqs__div {
+  display: flex;
+  align-items: flex-end; }
+  .headerFaqs__div__img {
+    height: 260px;
+    width: 100%; }
+
+.headerFaqs__title {
+  position: absolute;
+  color: maroon;
+  margin-left: 10px;
+  font-size: 45px;
+  margin-bottom: 0; }
+
+.faqsMain {
+  background-color: rgba(0, 0, 0, 0.03); }
+  .faqsMain__acordionContainer {
+    padding: 25px; }
+  .faqsMain__customizeCard {
+    border: none !important; }
