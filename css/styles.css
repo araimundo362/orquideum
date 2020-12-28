@@ -12,6 +12,16 @@
     height: 260px;
     width: 100%; }
 
+.headerFaqs__link {
+  display: flex;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 15px;
+  font-size: 25px;
+  font-weight: 600;
+  color: midnightblue; }
+
 .headerFaqs__title {
   position: absolute;
   color: maroon;
