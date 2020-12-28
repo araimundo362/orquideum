@@ -1,3 +1,6 @@
+.bodyFaq {
+    background-color: rgba(0,0,0,.03);
+}
 .headerFaqs {
     &__div {
         display: flex;
@@ -40,24 +43,55 @@
         margin-left: 10px;
 
         font-size: 45px;
-        margin-bottom: 0;
+        margin-bottom: 10px;
     }
 }
 
 .faqsMain {
-    background-color: rgba(0,0,0,.03);
-
-    &__acordionContainer {
-        padding: 25px;
-    }
+    min-height: 380px;
+    
 
     &__customizeCard {
         border: none !important;
     }
 
+    &__questions {
+        margin-left: 10px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
     &__answers {
         font-family: 'Rubik', sans-serif;
     }
 }
 
+.faqFooter {
+    background-color: rgba(0,0,0,.03);
+    height: 15px;
+}
+
+@media only screen and (max-width: 450px) {
+    .faqFooter {
+        background-color: rgba(0,0,0,.03);
+    }
+    
+    .headerFaqs {
+        &__title {
+            font-size: 30px;
+            max-width: 155px;
+
+            position: absolute;
+            color: maroon;
+            margin-left: 5px;
+        }
+    }
+
+    .faqsMain {
+        min-height: 380px;
+        &__questions {
+            margin-left: 10px;
+            
+        }
+    }
+
+}
 //Para celu, padd-left: 0
