@@ -9,6 +9,14 @@
         }
     }
 
+    &__nav {
+        display: flex;
+    }
+
+    &__font {
+        font-weight: 600;
+    }
+
     &__link {
         display: flex;
 

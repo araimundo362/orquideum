@@ -12,6 +12,12 @@
     height: 260px;
     width: 100%; }
 
+.headerFaqs__nav {
+  display: flex; }
+
+.headerFaqs__font {
+  font-weight: 600; }
+
 .headerFaqs__link {
   display: flex;
   position: absolute;
