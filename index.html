@@ -6,15 +6,37 @@
     <title>Orquideum</title>
 
     <link rel="stylesheet" href="css/styles.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Arimo&display=swap" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
 </head>
 <body>
-    <header>
-        <a href="faqPage.html">Preguntas Frecuentes</a>
+    <header class="headerIndex">
+        <nav class="headerIndex__nav">
+            <a href="faqPage.html">Preguntas Frecuentes</a>
+            <a href="#contacto">Contacto</a>
+        </nav>
+        <div class="headerIndex__overlay">
+            <h1 class="headerIndex__title">Orquideum</h1>
+            <div>
+                <h3 class="headerIndex__subTitle">Entra y disfruta de nuestra galeria!</h3>
+                <button class="headerIndex__button">
+                    GALERIA
+                </button>
+            </div>
+        </div>
     </header>
     <main style="height: 100vh;">
+        <section id="familias" class="mainHeader__family">
+            <div class="mainHeader__titleContainer">
+                <h4>Nuestras familias</h4>
+            </div>
 
-        <iframe class="frameClass" src="formContacto.html" width="100%" height="100%" ></iframe>
+        </section>
+
+        
+            <iframe id="contacto" class="frameClass" src="formContacto.html" width="100%" height="100%" ></iframe>
 
     </main>
     <footer>
