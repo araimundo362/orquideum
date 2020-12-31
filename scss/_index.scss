@@ -14,8 +14,29 @@ body {
 }
 
 .footer {
-  background-color: midnightblue;
+  background-color: plum;
   min-height: 60px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__list {
+    display: flex;
+    justify-content: space-evenly;
+    list-style: none;
+
+    width: 50%;
+
+    margin: 0;
+  }
+
+  &__label {
+    margin: 0;
+    font-size: 20px;
+    margin-left: 10px;
+    font-family: sans-serif;
+  }
 }
 .headerIndex {
 	background-image: url('../imagenes/orqIndex1.jpg');
@@ -32,7 +53,7 @@ body {
 		padding: 15px;
 		display: flex;
 		justify-content: space-around;
-		width: 35%;
+		width: 60%;
 
 		a {
 			font-size: 17px;
@@ -96,6 +117,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 20px;
 }
 
 .formContainer {
@@ -104,18 +126,10 @@ body {
 }
 .mainIndex {
 
-  &__contact {
-    height: inherit;
-
-    background-color: floralwhite;
-  }
-
 	&__family {
 		display: flex;
 		justify-content: center;
     align-items: center;
-    
-    height: 400px;
     
 		margin-top: 15px;
 	}
@@ -156,8 +170,7 @@ body {
     &__column {
       margin-top:3rem;
       padding-left:3rem;
-      margin: 15px 12px 20px 12px;
-
+  
       &:hover {
         padding-left:0;
 
@@ -254,7 +267,71 @@ body {
   }
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 630px) {
+
+  .headerIndex {
+    background-image: url('../imagenes/orqIndex1.jpg');
+    background-size: cover;
+
+    background-attachment:inherit;
+    width: 100%;
+
+    &__overlay {
+      padding: 30px;
+    }
+    &__nav {
+      padding: 15px;
+      display: flex;
+      justify-content: space-around;
+
+      width: 100%;
+
+      a {
+        max-width: 30%;
+      }
+    }
+    &__title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 50px;
+      margin-bottom: 30px;
+      color: antiquewhite;
+    }
+  }
+
+  .formContainer {
+    width: 100%;
+    margin-top: 15px;
+  }
+  .mainIndex {
+
+    &__rowContent {
+      position: relative;
+      top: 50%;
+      
+      display: flex;
+      flex-direction: column;
+      width: 95%;
+
+      &__card {
+
+        &__txt {
+          z-index: 1;
+
+          margin-left: 0;
+
+          p {
+            font-size: .7rem;
+            font-family: 'Open Sans', sans-serif;
+            letter-spacing: 0rem;
+
+            color: white;
+
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
     .indexHeader {
 
 
