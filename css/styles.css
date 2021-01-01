@@ -1,21 +1,22 @@
-.frameClass {
-  border: none; }
-
-.buttonContainer {
-  display: flex;
-  justify-content: center; }
-
 .mainContact {
   background-color: floralwhite; }
-
-.myForm {
-  display: flex;
-  flex-direction: column;
-  align-items: center; }
+  .mainContact__buttonContainer {
+    display: flex;
+    justify-content: center; }
 
 .formContainer {
   width: 50%;
   margin-top: 15px; }
+  .formContainer__myForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px; }
+
+@media screen and (max-width: 630px) {
+  .formContainer {
+    width: 100%;
+    margin-top: 15px; } }
 
 .bodyFaq {
   background-color: rgba(0, 0, 0, 0.03); }
@@ -97,23 +98,9 @@
 body {
   background-color: floralwhite; }
 
-.footer {
-  background-color: plum;
-  min-height: 60px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center; }
-  .footer__list {
-    display: flex;
-    justify-content: space-evenly;
-    list-style: none;
-    width: 50%;
-    margin: 0; }
-  .footer__label {
-    margin: 0;
-    font-size: 20px;
-    margin-left: 10px;
-    font-family: sans-serif; }
+a:hover {
+  text-decoration: none !important;
+  color: midnightblue; }
 
 .headerIndex {
   background-image: url("../imagenes/orqIndex1.jpg");
@@ -158,28 +145,9 @@ body {
     background: #fff;
     margin-bottom: 50px;
     box-shadow: 0 3px 20px 0 #0000003b; }
-  .headerIndex__button:hover {
-    cursor: pointer; }
-
-.frameClass {
-  border: none; }
-
-.buttonContainer {
-  display: flex;
-  justify-content: center; }
-
-.mainContact {
-  background-color: floralwhite; }
-
-.myForm {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px; }
-
-.formContainer {
-  width: 50%;
-  margin-top: 15px; }
+    .headerIndex__button:hover {
+      cursor: pointer;
+      background-color: skyblue; }
 
 .mainIndex__family {
   display: flex;
@@ -302,9 +270,6 @@ body {
       font-size: 50px;
       margin-bottom: 30px;
       color: antiquewhite; }
-  .formContainer {
-    width: 100%;
-    margin-top: 15px; }
   .mainIndex__rowContent {
     position: relative;
     top: 50%;
@@ -319,9 +284,7 @@ body {
         font-family: 'Open Sans', sans-serif;
         letter-spacing: 0rem;
         color: white;
-        opacity: 1; }
-  .indexHeader__nav {
-    display: none; } }
+        opacity: 1; } }
 
 .galeriaMainSection__backgroundModal {
   background: transparent !important; }
@@ -353,3 +316,21 @@ body {
       margin: 15px; }
   .mainGlosario__panelContent {
     font-size: 14px; }
+
+.footer {
+  background-color: plum;
+  min-height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  .footer__list {
+    display: flex;
+    justify-content: space-evenly;
+    list-style: none;
+    width: 50%;
+    margin: 0; }
+  .footer__label {
+    margin: 0;
+    font-size: 20px;
+    margin-left: 10px;
+    font-family: sans-serif; }

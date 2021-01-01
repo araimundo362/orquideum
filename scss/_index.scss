@@ -13,31 +13,11 @@ body {
 	background-color: floralwhite;
 }
 
-.footer {
-  background-color: plum;
-  min-height: 60px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  &__list {
-    display: flex;
-    justify-content: space-evenly;
-    list-style: none;
-
-    width: 50%;
-
-    margin: 0;
-  }
-
-  &__label {
-    margin: 0;
-    font-size: 20px;
-    margin-left: 10px;
-    font-family: sans-serif;
-  }
+a:hover {
+  text-decoration: none !important;
+  color: midnightblue;
 }
+
 .headerIndex {
 	background-image: url('../imagenes/orqIndex1.jpg');
 	text-align: left;
@@ -92,38 +72,15 @@ body {
 		color: #333;
 		background: #fff;
 		margin-bottom: 50px;
-		box-shadow: 0 3px 20px 0 #0000003b;
+    box-shadow: 0 3px 20px 0 #0000003b;
+    
+    &:hover{
+      cursor: pointer;
+      background-color:skyblue;
+    }
 	}
-
-	&__button:hover {
-		cursor: pointer;
-	}
 }
 
-.frameClass{
-  border: none;
-}
-
-.buttonContainer{
-  display: flex;
-  justify-content: center;
-}
-
-.mainContact {
-  background-color: floralwhite;
-}
-
-.myForm {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px;
-}
-
-.formContainer {
-  width: 50%;
-  margin-top: 15px;
-}
 .mainIndex {
 
 	&__family {
@@ -298,10 +255,6 @@ body {
     }
   }
 
-  .formContainer {
-    width: 100%;
-    margin-top: 15px;
-  }
   .mainIndex {
 
     &__rowContent {
@@ -332,11 +285,4 @@ body {
       }
     }
   }
-    .indexHeader {
-
-
-        &__nav {
-            display: none;
-        }
-    }
 }

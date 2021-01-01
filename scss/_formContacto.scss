@@ -1,23 +1,29 @@
-.frameClass{
-    border: none;
-}
 
-.buttonContainer{
-    display: flex;
-    justify-content: center;
-}
 
 .mainContact {
     background-color: floralwhite;
-}
 
-.myForm {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    &__buttonContainer {
+        display: flex;
+        justify-content: center;
+    }
 }
 
 .formContainer {
     width: 50%;
     margin-top: 15px;
-}
+  
+    &__myForm {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px;
+    }
+  }
+
+  @media screen and (max-width: 630px) {
+    .formContainer {
+        width: 100%;
+        margin-top: 15px;
+      }
+  }

@@ -1,0 +1,25 @@
+.footer {
+    background-color: plum;
+    min-height: 60px;
+  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    &__list {
+      display: flex;
+      justify-content: space-evenly;
+      list-style: none;
+  
+      width: 50%;
+  
+      margin: 0;
+    }
+  
+    &__label {
+      margin: 0;
+      font-size: 20px;
+      margin-left: 10px;
+      font-family: sans-serif;
+    }
+  }
