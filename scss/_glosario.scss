@@ -1,0 +1,18 @@
+.mainGlosario {
+    background-color: antiquewhite;
+
+    &__glosarioTitleContainer {
+        display: flex;
+        justify-content: center;
+    
+        h1 {
+            font-size: 40px;
+            color: cadetblue;
+            margin: 15px;
+        }
+    }
+
+    &__panelContent {
+        font-size: 14px;
+    }
+}

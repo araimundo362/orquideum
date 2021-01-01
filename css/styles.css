@@ -341,3 +341,15 @@ body {
   border-radius: 15px;
   width: 180px !important;
   height: 200px !important; }
+
+.mainGlosario {
+  background-color: antiquewhite; }
+  .mainGlosario__glosarioTitleContainer {
+    display: flex;
+    justify-content: center; }
+    .mainGlosario__glosarioTitleContainer h1 {
+      font-size: 40px;
+      color: cadetblue;
+      margin: 15px; }
+  .mainGlosario__panelContent {
+    font-size: 14px; }
