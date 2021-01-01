@@ -322,3 +322,22 @@ body {
         opacity: 1; }
   .indexHeader__nav {
     display: none; } }
+
+.galeriaMainSection__backgroundModal {
+  background: transparent !important; }
+
+.galeriaMainSection__titleModal {
+  align-self: center;
+  color: antiquewhite; }
+
+.galeriaMainSection__noMargin {
+  margin: 0 !important; }
+
+.galeriaMainSection__modalHeader {
+  background: darkorchid; }
+
+.galeriaMainSection__customImg {
+  margin: 15px;
+  border-radius: 15px;
+  width: 180px !important;
+  height: 200px !important; }

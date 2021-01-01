@@ -1,0 +1,27 @@
+.galeriaMainSection {
+
+    &__backgroundModal {
+        background: transparent !important;
+    }
+
+    &__titleModal {
+        align-self: center;
+        color: antiquewhite;
+    }
+
+    &__noMargin {
+        margin: 0 !important;
+    }
+
+    &__modalHeader {
+        background: darkorchid; 
+    }
+
+    &__customImg {
+        margin: 15px;
+        border-radius: 15px;
+
+        width: 180px !important;
+        height: 200px !important;
+    }
+}
