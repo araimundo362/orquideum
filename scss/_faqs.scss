@@ -1,51 +1,6 @@
 .bodyFaq {
     background-color: rgba(0,0,0,.03);
 }
-.headerFaqs {
-    &__div {
-        display: flex;
-        align-items: flex-end;
-
-        &__img {
-            height: 260px;
-            width: 100%;
-        }
-    }
-
-    &__nav {
-        display: flex;
-    }
-
-    &__font {
-        font-weight: 600;
-    }
-
-    &__link {
-        display: flex;
-
-        position: absolute;
-
-        left: 0;
-        top: 0;
-
-        padding: 15px;
-
-        font-size: 25px;
-        font-weight: 600;
-
-        color: midnightblue;
-
-        
-    }
-    &__title {
-        position: absolute;
-        color: maroon;
-        margin-left: 10px;
-
-        font-size: 45px;
-        margin-bottom: 10px;
-    }
-}
 
 .faqsMain {
     min-height: 380px;
@@ -74,16 +29,6 @@
         background-color: rgba(0,0,0,.03);
     }
     
-    .headerFaqs {
-        &__title {
-            font-size: 30px;
-            max-width: 155px;
-
-            position: absolute;
-            color: maroon;
-            margin-left: 5px;
-        }
-    }
 
     .faqsMain {
         min-height: 380px;
@@ -92,6 +37,4 @@
             
         }
     }
-
 }
-//Para celu, padd-left: 0

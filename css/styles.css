@@ -108,36 +108,6 @@
 .bodyFaq {
   background-color: rgba(0, 0, 0, 0.03); }
 
-.headerFaqs__div {
-  display: flex;
-  align-items: flex-end; }
-  .headerFaqs__div__img {
-    height: 260px;
-    width: 100%; }
-
-.headerFaqs__nav {
-  display: flex; }
-
-.headerFaqs__font {
-  font-weight: 600; }
-
-.headerFaqs__link {
-  display: flex;
-  position: absolute;
-  left: 0;
-  top: 0;
-  padding: 15px;
-  font-size: 25px;
-  font-weight: 600;
-  color: midnightblue; }
-
-.headerFaqs__title {
-  position: absolute;
-  color: maroon;
-  margin-left: 10px;
-  font-size: 45px;
-  margin-bottom: 10px; }
-
 .faqsMain {
   min-height: 380px; }
   .faqsMain__customizeCard {
@@ -155,12 +125,6 @@
 @media only screen and (max-width: 450px) {
   .faqFooter {
     background-color: rgba(0, 0, 0, 0.03); }
-  .headerFaqs__title {
-    font-size: 30px;
-    max-width: 155px;
-    position: absolute;
-    color: maroon;
-    margin-left: 5px; }
   .faqsMain {
     min-height: 380px; }
     .faqsMain__questions {
@@ -347,7 +311,8 @@ a:hover {
     justify-content: center; }
     .mainGlosario__glosarioTitleContainer h1 {
       font-size: 40px;
-      color: cadetblue;
+      font-family: 'Poppins', sans-serif;
+      color: cornflowerblue;
       margin: 15px; }
   .mainGlosario__panelContent {
     font-size: 14px; }
