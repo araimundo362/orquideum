@@ -18,6 +18,93 @@
     width: 100%;
     margin-top: 15px; } }
 
+.headerIndex {
+  background-image: url("../imagenes/orqIndex1.jpg");
+  background-color: antiquewhite;
+  text-align: left;
+  width: 100%;
+  height: auto;
+  background-size: cover;
+  background-attachment: fixed;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0 0 85% 85% / 30%; }
+  .headerIndex__nav {
+    padding: 15px;
+    display: flex;
+    justify-content: space-around;
+    width: 60%; }
+    .headerIndex__nav a {
+      font-size: 17px;
+      text-decoration: none;
+      font-family: 'Arimo', sans-serif; }
+      .headerIndex__nav a:hover {
+        color: gold; }
+  .headerIndex__overlay {
+    width: 100%;
+    height: 100%;
+    padding: 50px;
+    color: #FFF;
+    text-shadow: 1px 1px 1px #333; }
+  .headerIndex__title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 80px;
+    margin-bottom: 30px;
+    color: antiquewhite; }
+  .headerIndex__subTitle {
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 5px;
+    color: dodgerblue; }
+  .headerIndex__button {
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    color: #333;
+    background: #fff;
+    margin-bottom: 50px;
+    box-shadow: 0 3px 20px 0 #0000003b; }
+    .headerIndex__button:hover {
+      cursor: pointer;
+      background-color: skyblue; }
+  .headerIndex #menuIcon {
+    display: none !important; }
+  .headerIndex #checkbox {
+    display: none; }
+
+@media only screen and (max-width: 630px) {
+  .headerIndex__nav {
+    display: none; }
+  .headerIndex__title {
+    font-size: 40px;
+    margin-top: 30px; }
+  .headerIndex #menuIcon {
+    display: flex !important;
+    align-self: center;
+    pointer-events: none;
+    color: white;
+    margin: 20px; }
+  .headerIndex #checkbox {
+    position: absolute;
+    align-self: center;
+    display: flex;
+    margin: 20px;
+    opacity: 0; }
+  #checkbox:checked ~ .headerIndex__nav {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 15%;
+    width: 100%; }
+  #checkbox:checked ~ .headerIndex__nav a {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%; } }
+
 .bodyFaq {
   background-color: rgba(0, 0, 0, 0.03); }
 
@@ -101,53 +188,6 @@ body {
 a:hover {
   text-decoration: none !important;
   color: midnightblue; }
-
-.headerIndex {
-  background-image: url("../imagenes/orqIndex1.jpg");
-  text-align: left;
-  width: 100%;
-  height: auto;
-  background-size: cover;
-  background-attachment: fixed;
-  position: relative;
-  overflow: hidden;
-  border-radius: 0 0 85% 85% / 30%; }
-  .headerIndex__nav {
-    padding: 15px;
-    display: flex;
-    justify-content: space-around;
-    width: 60%; }
-    .headerIndex__nav a {
-      font-size: 17px;
-      text-decoration: none;
-      font-family: 'Arimo', sans-serif; }
-  .headerIndex__overlay {
-    width: 100%;
-    height: 100%;
-    padding: 50px;
-    color: #FFF;
-    text-shadow: 1px 1px 1px #333; }
-  .headerIndex__title {
-    font-family: 'Dancing Script', cursive;
-    font-size: 80px;
-    margin-bottom: 30px;
-    color: antiquewhite; }
-  .headerIndex__subTitle {
-    font-family: 'Open Sans', sans-serif;
-    margin-bottom: 5px;
-    color: dodgerblue; }
-  .headerIndex__button {
-    border: none;
-    outline: none;
-    padding: 10px 20px;
-    border-radius: 50px;
-    color: #333;
-    background: #fff;
-    margin-bottom: 50px;
-    box-shadow: 0 3px 20px 0 #0000003b; }
-    .headerIndex__button:hover {
-      cursor: pointer;
-      background-color: skyblue; }
 
 .mainIndex__family {
   display: flex;
@@ -251,25 +291,6 @@ a:hover {
         transition: .5s; }
 
 @media screen and (max-width: 630px) {
-  .headerIndex {
-    background-image: url("../imagenes/orqIndex1.jpg");
-    background-size: cover;
-    background-attachment: inherit;
-    width: 100%; }
-    .headerIndex__overlay {
-      padding: 30px; }
-    .headerIndex__nav {
-      padding: 15px;
-      display: flex;
-      justify-content: space-around;
-      width: 100%; }
-      .headerIndex__nav a {
-        max-width: 30%; }
-    .headerIndex__title {
-      font-family: 'Dancing Script', cursive;
-      font-size: 50px;
-      margin-bottom: 30px;
-      color: antiquewhite; }
   .mainIndex__rowContent {
     position: relative;
     top: 50%;
@@ -286,37 +307,38 @@ a:hover {
         color: white;
         opacity: 1; } }
 
-.galeriaMainSection__backgroundModal {
-  background: transparent !important; }
+.galeriaBody {
+  background-color: antiquewhite; }
 
-.galeriaMainSection__titleModal {
-  align-self: center;
-  color: antiquewhite; }
-
-.galeriaMainSection__noMargin {
-  margin: 0 !important; }
-
-.galeriaMainSection__modalHeader {
-  background: darkorchid; }
-
-.galeriaMainSection__customImg {
-  margin: 15px;
-  border-radius: 15px;
-  width: 180px !important;
-  height: 200px !important; }
-  .galeriaMainSection__customImg__hoverEffect {
-    position: absolute;
-    top: 50%;
-    left: 45%;
-    opacity: 0; }
-  .galeriaMainSection__customImg:hover {
-    opacity: 0.5; }
-  .galeriaMainSection__customImg:hover ~ .galeriaMainSection__customImg__hoverEffect {
-    position: absolute;
-    top: 50%;
-    left: 45%;
-    opacity: 1;
-    pointer-events: none; }
+.galeriaMainSection {
+  background-color: antiquewhite; }
+  .galeriaMainSection__backgroundModal {
+    background: transparent !important; }
+  .galeriaMainSection__titleModal {
+    align-self: center;
+    color: antiquewhite; }
+  .galeriaMainSection__noMargin {
+    margin: 0 !important; }
+  .galeriaMainSection__modalHeader {
+    background: darkorchid; }
+  .galeriaMainSection__customImg {
+    margin: 15px;
+    border-radius: 15px;
+    width: 180px !important;
+    height: 200px !important; }
+    .galeriaMainSection__customImg__hoverEffect {
+      position: absolute;
+      top: 50%;
+      left: 45%;
+      opacity: 0; }
+    .galeriaMainSection__customImg:hover {
+      opacity: 0.5; }
+    .galeriaMainSection__customImg:hover ~ .galeriaMainSection__customImg__hoverEffect {
+      position: absolute;
+      top: 50%;
+      left: 45%;
+      opacity: 1;
+      pointer-events: none; }
 
 .mainGlosario {
   background-color: antiquewhite; }
@@ -404,3 +426,6 @@ a:hover {
 
 .nav-pills-custom .nav-link.active::before {
   opacity: 1; }
+
+body {
+  background-color: antiquewhite !important; }
