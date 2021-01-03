@@ -304,6 +304,19 @@ a:hover {
   border-radius: 15px;
   width: 180px !important;
   height: 200px !important; }
+  .galeriaMainSection__customImg__hoverEffect {
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    opacity: 0; }
+  .galeriaMainSection__customImg:hover {
+    opacity: 0.5; }
+  .galeriaMainSection__customImg:hover ~ .galeriaMainSection__customImg__hoverEffect {
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    opacity: 1;
+    pointer-events: none; }
 
 .mainGlosario {
   background-color: antiquewhite; }

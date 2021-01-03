@@ -23,5 +23,23 @@
 
         width: 180px !important;
         height: 200px !important;
+
+        &__hoverEffect {
+            position:absolute;
+            top: 50%;
+            left: 45%;
+            opacity: 0;
+        }
+        &:hover{
+            opacity: 0.5;
+        }
+
+         &:hover ~ &__hoverEffect {
+           position:absolute;
+           top: 50%;
+           left: 45%;
+           opacity: 1;
+           pointer-events: none;
+        }
     }
 }
