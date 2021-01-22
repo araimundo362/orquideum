@@ -1,10 +1,88 @@
-// Desafio 4 - Simulador de mercado online.
+// Desafio 5 - Objetos.
+class Orchid {
+  constructor(genero, especie, precio, stock) {
+    this.genero = genero;
+    this.especie = especie;
+    this.precio = precio;
+    this.stock = stock;
+  } 
+}
+
+function createCattleya(especie) {
+  return new Orchid('Cattleya', especie, 2000, 10);
+}
+
+ function createDendrobium(especie) {
+  return new Orchid('Dendrobium', especie, 1000, 10);
+}
+
+function createCymbidium(especie) {
+  return new Orchid('Cymbidium', especie, 4000, 10);
+}
+
+function createLaelia(especie) {
+  return new Orchid('Laelia', especie, 3000, 10);
+}
+
+
+
+
+/*let orquideum = [
+  new Orchid('Cattleya', 'lodiguesi', 2499, 7),
+  new Orchid('Dendrobium', 'Nobile', 1849, 2),
+  new Orchid('Laelia', 'Tenebrosa', 2000, 3),
+  new Orchid('Cymbidium', 'Briggitte-Bardot', 3599, 1 ),
+];
+
+let carrito = new Carrito([], 0);*/
+
+function clickCattleya() {
+    let especie = prompt('Ingrese su especie');
+    if (especie.toLowerCase() === 'lodiguesi') {
+      let cat = createCattleya(especie);
+      showOrchids(cat);
+    } else {
+      alert('Lo sentimos, no se encontro la especie recibida')
+    }
+}
+
+function clickDendrobium() {
+  let especie = prompt('Ingrese su especie');
+  if (especie.toLowerCase() === 'nobile') {
+    let den = createDendrobium(especie);
+    showOrchids(den);
+  } else {
+    alert('Lo sentimos, no se encontro la especie recibida')
+  }
+}
+
+function clickLaelia() {
+  let especie = prompt('Ingrese su especie');
+  if (especie.toLowerCase() === 'tenebrosa') {
+    let lae = createLaelia(especie);
+    showOrchids(lae);
+  } else {
+    alert('Lo sentimos, no se encontro la especie recibida')
+  }
+}
+
+function clickCymbidium() {
+  let especie = prompt('Ingrese su especie');
+  if (especie.toLowerCase() === 'briggitte-bardot') {
+    let cym = createCymbidium(especie);
+    showOrchids(cym);
+  } else {
+    alert('Lo sentimos, no se encontro la especie recibida')
+  }
+}
+
 
 function showOrchids(orq) {
-    switch (orq.toLowerCase()) {
+    switch (orq.genero.toLowerCase()) {
         case 'laelia':
             document.getElementById("result").innerHTML = `
-            <h1 style="align-self: center;"> Aqui tiene una laelia Tenebrosa </h1>
+            <h1 style="align-self: center;"> Aqui tiene una ${orq.genero} ${orq.especie} </h1>
+            <h2 style="align-self: center;">Precio: ${orq.precio}</h2>
             <div class="col-sm-6 col-md-4 col-lg-3 item">
             <a href="imagenes/orqIndex1.jpg" data-lightbox="photos" data-toggle="modal" data-target="#myModal3">
                 <img class="img-fluid galeriaMainSection__customImg" src="imagenes/Laelia-tenebrosa.jpg" >
@@ -29,7 +107,8 @@ function showOrchids(orq) {
             break;
         case 'cymbidium':
             document.getElementById("result").innerHTML = `
-                <h1 style="align-self: center;"> Aqui tiene una Cymbidium Briggitte-Bardot </h1>
+                <h1 style="align-self: center;"> Aqui tiene una ${orq.genero} ${orq.especie} </h1>
+                <h2 style="align-self: center;">Precio: ${orq.precio}</h2>
                 <div class="col-sm-6 col-md-4 col-lg-3 item">
                             <a href="imagenes/orqIndex1.jpg" data-lightbox="photos" data-toggle="modal" data-target="#myModal4">
                                 <img class="img-fluid galeriaMainSection__customImg" src="imagenes/cymbidium-BriggitteBardot.jpg" >
@@ -54,7 +133,8 @@ function showOrchids(orq) {
             break;
         case 'cattleya':
             document.getElementById("result").innerHTML = `
-            <h1 style="align-self: center;"> Aqui tiene una Cattleya Lodiguesi </h1>
+            <h1 style="align-self: center;"> Aqui tiene una ${orq.genero} ${orq.especie} </h1>
+            <h2 style="align-self: center;">Precio: ${orq.precio}</h2>
             <div class="col-sm-6 col-md-4 col-lg-3 item">
                             <a href="imagenes/orqIndex1.jpg" data-lightbox="photos" data-toggle="modal" data-target="#myModal6">
                                 <img class="img-fluid galeriaMainSection__customImg" src="imagenes/Cat-Lodiguesi.jpg" >
@@ -79,7 +159,8 @@ function showOrchids(orq) {
             break;
         case 'dendrobium':
             document.getElementById("result").innerHTML = `
-            <h1 style="align-self: center;"> Aqui tiene una dendrobium Nobile </h1>
+            <h1 style="align-self: center;"> Aqui tiene una ${orq.genero} ${orq.especie} </h1>
+            <h2 style="align-self: center;">Precio: ${orq.precio}</h2>
             <div class="col-sm-6 col-md-4 col-lg-3 item">
                             <a href="imagenes/orqIndex1.jpg" data-lightbox="photos" data-toggle="modal" data-target="#myModal8">
                                 <img class="img-fluid galeriaMainSection__customImg" src="imagenes/dendrobium-nobile.jpg" >
@@ -105,10 +186,3 @@ function showOrchids(orq) {
         document.getElementById("result").innerHTML = `<h1>Lo sentimos, no tenemos el genero solicitado.</h1>` 
     }
 }
-
-window.onload = () => {
-    let welcome = prompt('Bienvenido al market! Ingrese un genero en el que estaria interesado.');
-
-    showOrchids(welcome);
-}
-
