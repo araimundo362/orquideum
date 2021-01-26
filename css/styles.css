@@ -392,5 +392,32 @@ a:hover {
 .nav-pills-custom .nav-link.active::before {
   opacity: 1; }
 
+.market {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px; }
+  .market__img {
+    height: 300px !important; }
+
+.shopButton {
+  width: 50px;
+  height: 50px;
+  background-color: gainsboro;
+  border-radius: 30px;
+  position: fixed;
+  right: 5%;
+  bottom: 5%;
+  cursor: pointer; }
+  .shopButton i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: inherit; }
+
+.itemList {
+  display: flex;
+  flex-wrap: wrap;
+  width: 90%; }
+
 body {
   background-color: antiquewhite !important; }
