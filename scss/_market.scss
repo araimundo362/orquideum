@@ -9,26 +9,10 @@
     }
 }
 
-.shopButton {
-    width: 50px;
-    height: 50px;
-
-    background-color: gainsboro;
-    border-radius: 30px;
-
-    position: fixed;
-    right: 5%;
+.fixedButton {
+    position: fixed !important;
     bottom: 5%;
-
-    cursor: pointer;
-
-    i {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        height: inherit;
-    }
+    right: 5%;
 }
 
 .itemList {
