@@ -28,6 +28,7 @@ class Carrito {
     this.total = total; // Valor total del contenido en el carrito   
   }
 
+
   addToCarrito(orq) {
     if(orq.isAvailable()) {
       this.contentList = this.contentList.concat([orq]);
@@ -118,268 +119,137 @@ for (let i = 0; i < orquideum.length; i++) {
 
 document.getElementById('menu').innerHTML = item;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*function clickCattleya() {
-    let especie = prompt('Ingrese su especie');
-    if (especie.toLowerCase() === 'lodiguesi') {
-      let cat = createCattleya(especie);
-      showOrchids(cat);
-    } else {
-      alert('Lo sentimos, no se encontro la especie recibida')
-    }
-}
-
-function clickDendrobium() {
-  let especie = prompt('Ingrese su especie');
-  if (especie.toLowerCase() === 'nobile') {
-    let den = createDendrobium(especie);
-    showOrchids(den);
-  } else {
-    alert('Lo sentimos, no se encontro la especie recibida')
-  }
-}
-
-function clickLaelia() {
-  let especie = prompt('Ingrese su especie');
-  if (especie.toLowerCase() === 'tenebrosa') {
-    let lae = createLaelia(especie);
-    showOrchids(lae);
-  } else {
-    alert('Lo sentimos, no se encontro la especie recibida')
-  }
-}
-
-function clickCymbidium() {
-  let especie = prompt('Ingrese su especie');
-  if (especie.toLowerCase() === 'briggitte-bardot') {
-    let cym = createCymbidium(especie);
-    showOrchids(cym);
-  } else {
-    alert('Lo sentimos, no se encontro la especie recibida')
-  }
-}
-
-
-function showOrchids(orq) {
-    switch (orq.genero.toLowerCase()) {
-        case 'laelia':
-            document.getElementById("result").innerHTML = `
-            <h1 style="align-self: center;"> Aqui tiene una ${orq.genero} ${orq.especie} </h1>
-            <h2 style="align-self: center;">Precio: ${orq.precio}</h2>
-            <div class="col-sm-6 col-md-4 col-lg-3 item">
-            <a href="imagenes/orqIndex1.jpg" data-lightbox="photos" data-toggle="modal" data-target="#myModal3">
-                <img class="img-fluid galeriaMainSection__customImg" src="imagenes/Laelia-tenebrosa.jpg" >
-                <i class="fa fa-search galeriaMainSection__customImg__hoverEffect"></i>
-            </a>
-
-            <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content galeriaMainSection__backgroundModal">
-                    <div class="modal-header galeriaMainSection__modalHeader">
-                      <button type="button" class="close galeriaMainSection__noMargin" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title  galeriaMainSection__titleModal" id="myModalLabel">Laelia Tenebrosa</h4>
-                    </div>
-                    <div class="modal-body">
-                        <img class="img-fluid" src="imagenes/Laelia-tenebrosa.jpg" >
-                    </div>
+// Armo la lista de generos para poder filtrar. 
+
+let filters = ``;
+let auxGen = [];
+
+for(i=0; i < orquideum.length; i++) {
+  if (!auxGen.includes(orquideum[i].genero)) {
+    auxGen.push(orquideum[i].genero);
+    filters += `
+                  <div class="market__aside__filterContainer">
+                      <h6>${orquideum[i].genero}</h6>
+                      <input id="input${orquideum[i].especie}" type="checkbox" onchange="filterByName(orquideum[${i}], event)">
                   </div>
+              `
+  }
+}
+// Agrego las opciones de filtro
+document.getElementById('filtersName').innerHTML = filters;
+
+//Lista filtrada
+let filterList = [];
+let filterItems = ``;
+
+function checkForOrchid(orq, ar) {
+  for (i=0; i < ar.length; i++) {
+    if (ar[i].genero === orq.genero) {
+      return true;
+    }
+  }
+
+  return false;
+} 
+
+function filterByName(orq) {
+  // Me fijo si la orquidea ya fue agregada al filtro o no. En caso positivo la saco del arreglo filtrado y los elementos. En caso negativo, la agrego y filtro
+  if (checkForOrchid(orq, filterList)) {
+    filterList = filterList.filter((orch) => orch.genero !== orq.genero);
+  } else {
+    filterList = filterList.concat(orquideum.filter((orch) => orch.genero === orq.genero));
+  }
+
+  if(!filterList.length) {
+    let item = ``;
+    for (let i = 0; i < orquideum.length; i++) {
+      if (orquideum[i].stock > 0) {
+        item += `
+            <div class="col-lg-4 col-md-6 mb-4">
+              <div class="card h-100">
+                <a href="#"><img class="card-img-top market__img" alt="imagen flor" src=${orquideum[i].imagen}></a>
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <a href="#">${orquideum[i].genero} ${orquideum[i].especie}</a>
+                  </h4>
+                  <h5>$${orquideum[i].precio}</h5>
+                </div>
+                <div id="cardFooter" class="card-footer">
+                    <button type="button" class="btn btn-primary" onclick="carrito.addToCarrito(orquideum[${i}])">Comprar</button>
+                    <button type="button" class="btn btn-primary" onclick="carrito.removeFromCarrito(orquideum[${i}])">Sacar del carrito</button>
+                </div>
+          </div>
+        </div>
+        `;
+  }else {
+    item +=
+      ` <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top market__img" src=${orquideum[i].imagen} alt="imagen flor"></a>
+          <div class="card-body">
+          <h4 class="card-title">
+            <a href="#">${orquideum[i].genero} ${orquideum[i].especie}</a>
+          </h4>
+          <h5>$${orquideum[i].precio}</h5>
+        </div>
+        <div class="card-footer">
+          <button type="button" class="btn btn-primary" onclick="carrito.addToCarrito(orquideum[${i}])">Comprar</button>
+          <button type="button" class="btn btn-primary" onclick="carrito.removeFromCarrito(orquideum[${i}])">Sacar del carrito</button>
+        </div>
+      </div>
+    </div>`
+  }
+}
+document.getElementById('menu').innerHTML = item;
+
+  } else {
+    filterItems = ``;
+    for (let i = 0; i < filterList.length; i++) {
+      if (filterList[i].stock > 0) {
+        filterItems += `
+            <div class="col-lg-4 col-md-6 mb-4">
+              <div class="card h-100">
+                <a href="#"><img class="card-img-top market__img" alt="imagen flor" src=${filterList[i].imagen}></a>
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <a href="#">${filterList[i].genero} ${filterList[i].especie}</a>
+                  </h4>
+                  <h5>$${filterList[i].precio}</h5>
+                </div>
+                <div id="cardFooter" class="card-footer">
+                  <button type="button" class="btn btn-primary" onclick="carrito.addToCarrito(filterList[${i}])">Comprar</button>
+                  <button type="button" class="btn btn-primary" onclick="carrito.removeFromCarrito(filterList[${i}])">Sacar del carrito</button>
                 </div>
               </div>
-        </div>
-                            `; 
-            break;
-        case 'cymbidium':
-            document.getElementById("result").innerHTML = `
-                <h1 style="align-self: center;"> Aqui tiene una ${orq.genero} ${orq.especie} </h1>
-                <h2 style="align-self: center;">Precio: ${orq.precio}</h2>
-                <div class="col-sm-6 col-md-4 col-lg-3 item">
-                            <a href="imagenes/orqIndex1.jpg" data-lightbox="photos" data-toggle="modal" data-target="#myModal4">
-                                <img class="img-fluid galeriaMainSection__customImg" src="imagenes/cymbidium-BriggitteBardot.jpg" >
-                                <i class="fa fa-search galeriaMainSection__customImg__hoverEffect"></i>
-                            </a>
-
-                            <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                <div class="modal-dialog" role="document">
-                                  <div class="modal-content galeriaMainSection__backgroundModal">
-                                    <div class="modal-header galeriaMainSection__modalHeader">
-                                      <button type="button" class="close galeriaMainSection__noMargin" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                      <h4 class="modal-title  galeriaMainSection__titleModal" id="myModalLabel">Cymbidium Briggitte Bardot</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <img class="img-fluid" src="imagenes/cymbidium-BriggitteBardot.jpg" >
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                        </div>
+            </div>
             `;
-            break;
-        case 'cattleya':
-            document.getElementById("result").innerHTML = `
-            <h1 style="align-self: center;"> Aqui tiene una ${orq.genero} ${orq.especie} </h1>
-            <h2 style="align-self: center;">Precio: ${orq.precio}</h2>
-            <div class="col-sm-6 col-md-4 col-lg-3 item">
-                            <a href="imagenes/orqIndex1.jpg" data-lightbox="photos" data-toggle="modal" data-target="#myModal6">
-                                <img class="img-fluid galeriaMainSection__customImg" src="imagenes/Cat-Lodiguesi.jpg" >
-                                <i class="fa fa-search galeriaMainSection__customImg__hoverEffect"></i>
-                            </a>
-
-                            <div class="modal fade" id="myModal6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                <div class="modal-dialog" role="document">
-                                  <div class="modal-content galeriaMainSection__backgroundModal">
-                                    <div class="modal-header galeriaMainSection__modalHeader">
-                                      <button type="button" class="close galeriaMainSection__noMargin" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                      <h4 class="modal-title  galeriaMainSection__titleModal" id="myModalLabel">Cattleya Lodiguessi</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <img class="img-fluid" src="imagenes/Cat-Lodiguesi.jpg" >
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                        </div>
-            `;
-            break;
-        case 'dendrobium':
-            document.getElementById("result").innerHTML = `
-            <h1 style="align-self: center;"> Aqui tiene una ${orq.genero} ${orq.especie} </h1>
-            <h2 style="align-self: center;">Precio: ${orq.precio}</h2>
-            <div class="col-sm-6 col-md-4 col-lg-3 item">
-                            <a href="imagenes/orqIndex1.jpg" data-lightbox="photos" data-toggle="modal" data-target="#myModal8">
-                                <img class="img-fluid galeriaMainSection__customImg" src="imagenes/dendrobium-nobile.jpg" >
-                                <i class="fa fa-search galeriaMainSection__customImg__hoverEffect"></i>
-                            </a>
-
-                            <div class="modal fade" id="myModal8" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                <div class="modal-dialog" role="document">
-                                  <div class="modal-content galeriaMainSection__backgroundModal">
-                                    <div class="modal-header galeriaMainSection__modalHeader">
-                                      <button type="button" class="close galeriaMainSection__noMargin" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                      <h4 class="modal-title  galeriaMainSection__titleModal" id="myModalLabel">Dendrobium Nobile</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <img class="img-fluid" src="imagenes/dendrobium-nobile.jpg" >
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                        </div>`;
-            break;
-        default: 
-        document.getElementById("result").innerHTML = `<h1>Lo sentimos, no tenemos el genero solicitado.</h1>` 
+      }else {
+        filterItems +=
+          ` <div class="col-lg-4 col-md-6 mb-4">
+              <div class="card h-100">
+                <a href="#"><img class="card-img-top market__img" src=${filterList[i].imagen} alt="imagen flor"></a>
+              <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">${filterList[i].genero} ${filterList[i].especie}</a>
+              </h4>
+              <h5>$${filterList[i].precio}</h5>
+            </div>
+            <div class="card-footer">
+              <button type="button" class="btn btn-primary" onclick="carrito.addToCarrito(filterList[${i}])">Comprar</button>
+              <button type="button" class="btn btn-primary" onclick="carrito.removeFromCarrito(filterList[${i}])">Sacar del carrito</button>
+            </div>
+          </div>
+        </div>`
+      }
     }
-}
-*/
+  
+    //Borro el elemento menu del DOM.
+    document.getElementById('menu').remove();
+    //Creo el contenido con el nuevo listado.
+    let newDiv = document.createElement('div');
+    newDiv.setAttribute('class', 'itemList');
+    newDiv.id = 'menu';
+  
+    document.getElementById('contentContainer').appendChild(newDiv).innerHTML = filterItems;
+  }
+};

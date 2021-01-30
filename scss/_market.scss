@@ -1,11 +1,24 @@
 .market {
     display: flex;
-    flex-wrap: wrap;
 
-    padding: 20px;
+    padding-top: 35px;
+    padding-left: 20px;
 
     &__img {
         height: 300px !important;
+    }
+
+    &__aside {
+        width: 15%;
+
+        h3 {
+            border-bottom: thin solid darkgray;
+        }
+
+        &__filterContainer {
+            display: flex;
+            justify-content: space-between;
+        }
     }
 }
 

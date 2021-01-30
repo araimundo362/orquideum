@@ -394,10 +394,17 @@ a:hover {
 
 .market {
   display: flex;
-  flex-wrap: wrap;
-  padding: 20px; }
+  padding-top: 35px;
+  padding-left: 20px; }
   .market__img {
     height: 300px !important; }
+  .market__aside {
+    width: 15%; }
+    .market__aside h3 {
+      border-bottom: thin solid darkgray; }
+    .market__aside__filterContainer {
+      display: flex;
+      justify-content: space-between; }
 
 .fixedButton {
   position: fixed !important;
