@@ -1,4 +1,9 @@
-// Desafio 6 - Arrays.
+// Desafio 9 - Eventos.
+
+/********************************************************************************************************************* */
+// Clase Orquidea: genero, especie, precio, id e imagen. 
+// Metodos: isAvailable checkea si hay disponibilidad de stock en cuanto a lo que pide el cliente, minusStock resta el stock de acuerdo a lo que pide el cliente,
+// plusStock suma al stock lo que se remueva del carrito.
 class Orchid {
   constructor(id, genero, especie, precio, stock, img) {
     this.genero = genero;
@@ -9,31 +14,38 @@ class Orchid {
     this.imagen = img; // Agrego un id para poder remover exactamente una orquidea del carrito si se desea.
   }
   
-  isAvailable() {
-    return this.stock ? true : false;
+  isAvailable(cant) {
+    return cant < this.stock ? true : false;
   }
 
-  minusStock() {
-    this.stock = this.stock - 1;
+  minusStock(cant) {
+    this.stock = this.stock - cant;
   }
 
-  plusStock() {
-    this.stock = this.stock + 1;
-  }                      // Funciones para aumentar/decrementar el stock de orquideas.
+  plusStock(cant) {
+    this.stock = this.stock + cant;
+  }                 
 }
 
+/************************************************************************************************************************** */
+// Clase carrito: LLevamos un array para el contenido. Y un valor que es el total del mismo.
+//Metodos : addToCarrito agrega N elementos al carrito. removeFromCarrito saca un elemento seleccionado del carrito.
 class Carrito {
   constructor(content, total) {
-    this.contentList = content; // Arreglo para el contenido del carrito
-    this.total = total; // Valor total del contenido en el carrito   
+    this.contentList = content;
+    this.total = total;
   }
 
 
   addToCarrito(orq) {
-    if(orq.isAvailable()) {
-      this.contentList = this.contentList.concat([orq]);
-      this.total = this.total + orq.precio;
-      orq.minusStock();  
+    let cant =  document.getElementById(`input${orq.id}`).value;
+    console.log('cantidad a agregar', cant)
+    if(cant && orq.isAvailable(cant)) {
+      for(let j=0 ; j<cant; j++) {
+        this.contentList = this.contentList.concat([orq]);
+      }
+      this.total = this.total + cant * orq.precio;
+      orq.minusStock(cant);  
     } else {
       alert('Disculpe, nos quedamos sin stock')
     }
@@ -46,10 +58,11 @@ class Carrito {
   removeFromCarrito(orq) {
     let idList = this.contentList.map((elem) => elem.id);
     console.log('idList', idList)
-    if(idList.includes(orq.id)) {
+    if(idList.includes(orq.id)) { // [1,1,1,1, 2, 5] ???
+      let prevLength = this.contentList.length;
       this.contentList = this.contentList.filter( (orchid) => orchid.id !== orq.id);
-      this.total = this.total - orq.precio;
-      orq.plusStock();
+      this.total = this.total - (prevLength - this.contentList.length) * orq.precio;
+      orq.plusStock(prevLength - this.contentList.length);
     } else {
       alert('La planta no fue agregado al carrito!')
     }
@@ -64,6 +77,8 @@ class Carrito {
   }
 }
 
+/******************************************************************************************************** */
+// orquideum y carrito, Variables principales del ecommerce
 let orquideum = [
   new Orchid( 1 ,'Cattleya', 'Lodiguezzi', 2499, 7, "imagenes/Cat-Lodiguesi.jpg"),
   new Orchid( 2 , 'Dendrobium', 'Nobile', 1849, 2, "imagenes/dendrobium-nobile.jpg"),
@@ -76,6 +91,8 @@ let orquideum = [
 ];
 
 let carrito = new Carrito([], 0);
+
+// Generacion del contenido HTML  de nuestra pagina. 
 let item = ``;
 
 for (let i = 0; i < orquideum.length; i++) {
@@ -89,6 +106,7 @@ for (let i = 0; i < orquideum.length; i++) {
                 <a href="#">${orquideum[i].genero} ${orquideum[i].especie}</a>
               </h4>
               <h5>$${orquideum[i].precio}</h5>
+              <input placeholder="Cantidad" value="0" class="form-control form-control-rounded" type="number" id="input${orquideum[i].id}">
             </div>
             <div id="cardFooter" class="card-footer">
               <button type="button" class="btn btn-primary" onclick="carrito.addToCarrito(orquideum[${i}])">Comprar</button>
@@ -107,6 +125,7 @@ for (let i = 0; i < orquideum.length; i++) {
             <a href="#">${orquideum[i].genero} ${orquideum[i].especie}</a>
           </h4>
           <h5>$${orquideum[i].precio}</h5>
+          <input placeholder="Cantidad" value="" class="form-control form-control-rounded" type="number" id="input${orquideum[i].id}">
         </div>
         <div class="card-footer">
           <button type="button" class="btn btn-primary" onclick="carrito.addToCarrito(orquideum[${i}])">Comprar</button>
@@ -119,9 +138,11 @@ for (let i = 0; i < orquideum.length; i++) {
 
 document.getElementById('menu').innerHTML = item;
 
-// Armo la lista de generos para poder filtrar. 
-
+/************************************************************************************************************************************ */
+// Filtros
+// Se armo un filtro por genero, y precio.
 let filters = ``;
+let filterPrices = ``;
 let auxGen = [];
 
 for(i=0; i < orquideum.length; i++) {
@@ -130,17 +151,37 @@ for(i=0; i < orquideum.length; i++) {
     filters += `
                   <div class="market__aside__filterContainer">
                       <h6>${orquideum[i].genero}</h6>
-                      <input id="input${orquideum[i].especie}" type="checkbox" onchange="filterByName(orquideum[${i}], event)">
+                      <input id="input${orquideum[i].especie}" type="checkbox" onchange="filterByName(orquideum[${i}])">
                   </div>
               `
   }
 }
+
+filterPrices += `
+                  <div class="market__aside__filterContainer">
+                      <h6>Hasta 1000$</h6>
+                      <input id="inputPrice1" name="filterPrice" type="radio" onchange="filterByPrice(0,1000)">
+                  </div>
+                  <div class="market__aside__filterContainer">
+                      <h6>1001$ - 2000$</h6>
+                      <input id="inputPrice2" type="radio" name="filterPrice" onchange="filterByPrice(1001,2000)">
+                  </div>
+                  <div class="market__aside__filterContainer">
+                      <h6>2001$ - 3000$</h6>
+                      <input id="inputPrice3" name="filterPrice" type="radio" onchange="filterByPrice(2001,3000)">
+                  </div>
+                  <div class="market__aside__filterContainer">
+                      <h6>Desde 3000$</h6>
+                      <input id="inputPrice4" type="radio" name="filterPrice" onchange="filterByPrice(3000,99999)">
+                  </div>
+              `
+
 // Agrego las opciones de filtro
 document.getElementById('filtersName').innerHTML = filters;
+document.getElementById('filtersPrice').innerHTML = filterPrices;
 
 //Lista filtrada
 let filterList = [];
-let filterItems = ``;
 
 function checkForOrchid(orq, ar) {
   for (i=0; i < ar.length; i++) {
@@ -159,66 +200,61 @@ function filterByName(orq) {
   } else {
     filterList = filterList.concat(orquideum.filter((orch) => orch.genero === orq.genero));
   }
+// Llamo a esta funcion para setear el estado filtrado (teniendo en cuenta el otro filtro)
+  setFilterState(filterList, priceFilteredList);
+};
 
-  if(!filterList.length) {
-    let item = ``;
-    for (let i = 0; i < orquideum.length; i++) {
-      if (orquideum[i].stock > 0) {
-        item += `
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"><img class="card-img-top market__img" alt="imagen flor" src=${orquideum[i].imagen}></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">${orquideum[i].genero} ${orquideum[i].especie}</a>
-                  </h4>
-                  <h5>$${orquideum[i].precio}</h5>
-                </div>
-                <div id="cardFooter" class="card-footer">
-                    <button type="button" class="btn btn-primary" onclick="carrito.addToCarrito(orquideum[${i}])">Comprar</button>
-                    <button type="button" class="btn btn-primary" onclick="carrito.removeFromCarrito(orquideum[${i}])">Sacar del carrito</button>
-                </div>
-          </div>
-        </div>
-        `;
-  }else {
-    item +=
-      ` <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card h-100">
-            <a href="#"><img class="card-img-top market__img" src=${orquideum[i].imagen} alt="imagen flor"></a>
-          <div class="card-body">
-          <h4 class="card-title">
-            <a href="#">${orquideum[i].genero} ${orquideum[i].especie}</a>
-          </h4>
-          <h5>$${orquideum[i].precio}</h5>
-        </div>
-        <div class="card-footer">
-          <button type="button" class="btn btn-primary" onclick="carrito.addToCarrito(orquideum[${i}])">Comprar</button>
-          <button type="button" class="btn btn-primary" onclick="carrito.removeFromCarrito(orquideum[${i}])">Sacar del carrito</button>
-        </div>
-      </div>
-    </div>`
-  }
+let priceFilteredList = [];
+let filterItems = ``;
+
+function filterByPrice(desde, hasta) {
+  //Filtro desde el arreglo original las que esten en el precio.
+  priceFilteredList = orquideum.filter((orq) => desde <= orq.precio && orq.precio <= hasta);
+  // Llamo a esta funcion para setear el estado filtrado (teniendo en cuenta el otro filtro)
+  setFilterState(filterList, priceFilteredList);
 }
-document.getElementById('menu').innerHTML = item;
 
+function setFilterState(filterArray, priceFilterArray) {
+  let newFilterState = [];
+
+  // Hago una interseccion entre los arreglos en caso de tener distintos filtros. 
+  // Si alguno es vacio, "devuelvo" el otro. 
+  // Si los 2 son vacios, volvemos al estado original
+  if(priceFilterArray.length && filterArray.length) {
+    for(i=0; i<filterArray.length; i++) {
+      if(priceFilterArray.includes(filterArray[i])) {
+        newFilterState.push(filterArray[i]);
+      }
+    }
   } else {
-    filterItems = ``;
-    for (let i = 0; i < filterList.length; i++) {
-      if (filterList[i].stock > 0) {
+    if (!filterArray.length) {
+      newFilterState = priceFilterArray;
+    }
+    if(!priceFilterArray.length) {
+      newFilterState = filterArray;
+    }
+    if(!priceFilterArray.length && !filterArray.length){
+      newFilterState = orquideum;
+    }
+  }
+
+  filterItems = ``;
+    for (let i = 0; i < newFilterState.length; i++) {
+      if (newFilterState[i].stock > 0) {
         filterItems += `
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
-                <a href="#"><img class="card-img-top market__img" alt="imagen flor" src=${filterList[i].imagen}></a>
+                <a href="#"><img class="card-img-top market__img" alt="imagen flor" src=${newFilterState[i].imagen}></a>
                 <div class="card-body">
                   <h4 class="card-title">
-                    <a href="#">${filterList[i].genero} ${filterList[i].especie}</a>
+                    <a href="#">${newFilterState[i].genero} ${newFilterState[i].especie}</a>
                   </h4>
-                  <h5>$${filterList[i].precio}</h5>
+                  <h5>$${newFilterState[i].precio}</h5>
+                  <input placeholder="Cantidad" value="" class="form-control form-control-rounded" type="number" id="input${newFilterState[i].id}">
                 </div>
                 <div id="cardFooter" class="card-footer">
-                  <button type="button" class="btn btn-primary" onclick="carrito.addToCarrito(filterList[${i}])">Comprar</button>
-                  <button type="button" class="btn btn-primary" onclick="carrito.removeFromCarrito(filterList[${i}])">Sacar del carrito</button>
+                  <button type="button" class="btn btn-primary" onclick="carrito.addToCarrito(newFilterState[${i}])">Comprar</button>
+                  <button type="button" class="btn btn-primary" onclick="carrito.removeFromCarrito(newFilterState[${i}])">Sacar del carrito</button>
                 </div>
               </div>
             </div>
@@ -227,22 +263,23 @@ document.getElementById('menu').innerHTML = item;
         filterItems +=
           ` <div class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
-                <a href="#"><img class="card-img-top market__img" src=${filterList[i].imagen} alt="imagen flor"></a>
+                <a href="#"><img class="card-img-top market__img" src=${newFilterState[i].imagen} alt="imagen flor"></a>
               <div class="card-body">
               <h4 class="card-title">
-                <a href="#">${filterList[i].genero} ${filterList[i].especie}</a>
+                <a href="#">${newFilterState[i].genero} ${newFilterState[i].especie}</a>
               </h4>
-              <h5>$${filterList[i].precio}</h5>
+              <h5>$${newFilterState[i].precio}</h5>
+              <input placeholder="Cantidad" value="" class="form-control form-control-rounded" type="number" id="input${newFilterState[i].id}">
             </div>
             <div class="card-footer">
-              <button type="button" class="btn btn-primary" onclick="carrito.addToCarrito(filterList[${i}])">Comprar</button>
-              <button type="button" class="btn btn-primary" onclick="carrito.removeFromCarrito(filterList[${i}])">Sacar del carrito</button>
+              <button type="button" class="btn btn-primary" onclick="carrito.addToCarrito(newFilterState[${i}])">Comprar</button>
+              <button type="button" class="btn btn-primary" onclick="carrito.removeFromCarrito(newFilterState[${i}])">Sacar del carrito</button>
             </div>
           </div>
         </div>`
       }
     }
-  
+
     //Borro el elemento menu del DOM.
     document.getElementById('menu').remove();
     //Creo el contenido con el nuevo listado.
@@ -251,5 +288,5 @@ document.getElementById('menu').innerHTML = item;
     newDiv.id = 'menu';
   
     document.getElementById('contentContainer').appendChild(newDiv).innerHTML = filterItems;
-  }
-};
+
+}
