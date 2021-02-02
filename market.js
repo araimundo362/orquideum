@@ -47,7 +47,12 @@ class Carrito {
       this.total = this.total + cant * orq.precio;
       orq.minusStock(cant);  
     } else {
-      alert('Disculpe, nos quedamos sin stock')
+      let alertError = `
+        <div class="alert alert-danger" role="alert" style="margin-top: 15px">
+          <strong>Oh No! </strong> Nos quedamos sin stock! Intente comprar mas tarde.
+        </div>
+      `
+      document.getElementById('alertContainer').innerHTML = alertError;
     }
 
     console.log('carrito', this.contentList)
@@ -64,7 +69,12 @@ class Carrito {
       this.total = this.total - (prevLength - this.contentList.length) * orq.precio;
       orq.plusStock(prevLength - this.contentList.length);
     } else {
-      alert('La planta no fue agregado al carrito!')
+      let alertError = `
+        <div class="alert alert-danger" role="alert" style="margin-top: 15px">
+          Error! La planta no fue agregada al carrito.
+        </div>
+      `
+      document.getElementById('alertContainer').innerHTML = alertError;
     }
 
     console.log('carrito', this.contentList)
@@ -279,7 +289,6 @@ function setFilterState(filterArray, priceFilterArray) {
         </div>`
       }
     }
-
     //Borro el elemento menu del DOM.
     document.getElementById('menu').remove();
     //Creo el contenido con el nuevo listado.
@@ -288,5 +297,4 @@ function setFilterState(filterArray, priceFilterArray) {
     newDiv.id = 'menu';
   
     document.getElementById('contentContainer').appendChild(newDiv).innerHTML = filterItems;
-
 }
