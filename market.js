@@ -39,14 +39,13 @@ class Carrito {
 
   addToCarrito(orq) {
     let cant =  document.getElementById(`input${orq.id}`).value;
-    console.log('cantidad a agregar', cant)
     if(cant && orq.isAvailable(cant)) {
       for(let j=0 ; j<cant; j++) {
         this.contentList = this.contentList.concat([orq]);
       }
       this.total = this.total + cant * orq.precio;
       orq.minusStock(cant); 
-      localStorage.setItem('carrito', carrito); 
+      localStorage.setItem('carrito', JSON.stringify(carrito)); 
     } else {
       let alertError = `
         <div class="alert alert-danger" role="alert" style="margin-top: 15px">
@@ -58,12 +57,10 @@ class Carrito {
 
     console.log('carrito', this.contentList)
     console.log('total', this.total)
-    console.log(orq)
   }
 
   removeFromCarrito(orq) {
     let idList = this.contentList.map((elem) => elem.id);
-    console.log('idList', idList)
     if(idList.includes(orq.id)) {
       let index = this.contentList.findIndex((orch) => orch.id === orq.id);
       let contentAux= [];
@@ -73,8 +70,9 @@ class Carrito {
         }
       }
       this.contentList = contentAux;
-      this.total = this.total - orq.precio;
+      this.total = this.total - orq.precio; 
       orq.plusStock();
+      localStorage.setItem('carrito', JSON.stringify(carrito));
     } else {
       let alertError = `
         <div class="alert alert-danger" role="alert" style="margin-top: 15px">
@@ -86,7 +84,6 @@ class Carrito {
 
     console.log('carrito', this.contentList)
     console.log('total', this.total)
-    console.log(orq)
   }
 
   getTotal() {
@@ -107,7 +104,18 @@ let orquideum = [
   new Orchid( 8, 'Odontocidium', 'Susan-Keller', 1800, 7, "imagenes/odonto-SusanKeller.jpg" )
 ];
 
-let carrito = new Carrito([], 0);
+let carrito;
+
+if(localStorage.getItem('carrito') !== null) {
+  let content = JSON.parse(localStorage.getItem('carrito')).contentList;
+  let prevTotal = 0;
+  for(i=0; i < content.length ; i++) {
+    prevTotal += content[i].precio
+  }
+  carrito = new Carrito(content, prevTotal);
+} else {
+  carrito = new Carrito([], 0);
+}
 
 // Generacion del contenido HTML  de nuestra pagina. 
 let item = ``;
@@ -260,7 +268,6 @@ function setFilterState(filterArray, priceFilterArray) {
       }
     }
 
-    console.log('veo el filterState', newFilterState)
     //Borro el elemento menu del DOM.
     document.getElementById('menu').remove();
     //Creo el contenido con el nuevo listado.
