@@ -38,7 +38,8 @@ class Carrito {
 
 
   addToCarrito(orq) {
-    let cant =  document.getElementById(`input${orq.id}`).value;
+    let cant = $(`#input${orq.id}`).val();
+
     if(cant && orq.isAvailable(cant)) {
       for(let j=0 ; j<cant; j++) {
         this.contentList = this.contentList.concat([orq]);
@@ -52,7 +53,7 @@ class Carrito {
           <strong>Oh No! </strong> Nos quedamos sin stock! Intente comprar mas tarde.
         </div>
       `
-      document.getElementById('alertContainer').innerHTML = alertError;
+      $('#alertContainer').html(alertError);
     }
 
     console.log('carrito', this.contentList)
@@ -79,7 +80,8 @@ class Carrito {
           Error! La planta no fue agregada al carrito.
         </div>
       `
-      document.getElementById('alertContainer').innerHTML = alertError;
+      // document.getElementById('alertContainer').innerHTML = alertError;
+      $('#alertContainer').html(alertError);
     }
 
     console.log('carrito', this.contentList)
@@ -117,6 +119,7 @@ if(localStorage.getItem('carrito') !== null) {
   carrito = new Carrito([], 0);
 }
 
+
 // Generacion del contenido HTML  de nuestra pagina. 
 let item = ``;
 
@@ -143,7 +146,7 @@ for (let i = 0; i < orquideum.length; i++) {
   }
 }
 
-document.getElementById('menu').innerHTML = item;
+$('#menu').html(item);
 
 /************************************************************************************************************************************ */
 // Filtros
@@ -184,9 +187,11 @@ filterPrices += `
               `
 
 // Agrego las opciones de filtro
-document.getElementById('filtersName').innerHTML = filters;
-document.getElementById('filtersPrice').innerHTML = filterPrices;
+// document.getElementById('filtersName').innerHTML = filters;
 
+$('#filtersName').html(filters);
+//document.getElementById('filtersPrice').innerHTML = filterPrices;
+$('#filtersPrice').html(filterPrices);
 //Lista filtrada
 let filterList = [];
 
