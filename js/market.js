@@ -80,7 +80,6 @@ class Carrito {
           Error! La planta no fue agregada al carrito.
         </div>
       `
-      // document.getElementById('alertContainer').innerHTML = alertError;
       $('#alertContainer').html(alertError);
     }
 
@@ -187,10 +186,7 @@ filterPrices += `
               `
 
 // Agrego las opciones de filtro
-// document.getElementById('filtersName').innerHTML = filters;
-
 $('#filtersName').html(filters);
-//document.getElementById('filtersPrice').innerHTML = filterPrices;
 $('#filtersPrice').html(filterPrices);
 //Lista filtrada
 let filterList = [];

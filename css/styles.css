@@ -416,5 +416,59 @@ a:hover {
   flex-wrap: wrap;
   width: 90%; }
 
+.mainContent {
+  display: flex; }
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin: 10px; }
+
+.payFormContainer {
+  width: 80%;
+  margin-top: 10px; }
+
+.paymentLegend {
+  align-self: flex-start;
+  margin-left: 20px; }
+
+.summaryContainer {
+  display: flex;
+  margin-top: 15px;
+  width: 50%; }
+  .summaryContainer__products {
+    background-color: #f7fbff;
+    padding: 25px;
+    margin-left: 5px;
+    width: 100%;
+    height: fit-content;
+    border-top-style: groove;
+    border-top-color: chartreuse; }
+  .summaryContainer__title {
+    font-size: 1em;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.8em;
+    font-weight: 600;
+    padding-bottom: 8px; }
+  .summaryContainer__price {
+    float: right;
+    font-weight: 600;
+    font-size: 0.9em; }
+  .summaryContainer__total {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    padding-top: 19px;
+    font-weight: 600;
+    line-height: 1; }
+  .summaryContainer__item {
+    margin-bottom: 1em; }
+    .summaryContainer__item__genero {
+      font-weight: 600;
+      font-size: 0.9em;
+      margin-bottom: 0; }
+    .summaryContainer__item__especie {
+      font-size: 0.8em;
+      opacity: 0.6; }
+
 body {
   background-color: antiquewhite !important; }
