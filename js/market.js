@@ -39,21 +39,37 @@ class Carrito {
 
   addToCarrito(orq) {
     let cant = $(`#input${orq.id}`).val();
-
-    if(cant && orq.isAvailable(cant)) {
+    if(cant > 0 && orq.isAvailable(cant)) {
       for(let j=0 ; j<cant; j++) {
         this.contentList = this.contentList.concat([orq]);
       }
       this.total = this.total + cant * orq.precio;
       orq.minusStock(cant); 
       localStorage.setItem('carrito', JSON.stringify(carrito)); 
+      let alertSuccess = `
+      <div class="alert alert-success" role="alert" style="margin-top: 15px">
+        <strong>Confirmado!</strong> Hemos agregado exitosamente el elemento al carrito.
+      </div>
+      `
+      $('#alertContainer').html(alertSuccess);
+      $('#errorMsg').remove();
     } else {
-      let alertError = `
+      let alertError = ``
+      if (cant == 0) {
+        alertError = `
+          <div class="errorMsg" style="margin-top: 15px" id="errorMsg">
+            Por favor, debe agregar al menos 1 elemento al carrito.
+          </div>
+      `
+      $(`#errorInputCant${orq.id}`).html(alertError);
+      } else {
+        alertError = `
         <div class="alert alert-danger" role="alert" style="margin-top: 15px">
           <strong>Oh No! </strong> Nos quedamos sin stock! Intente comprar mas tarde.
         </div>
       `
       $('#alertContainer').html(alertError);
+      }
     }
 
     console.log('carrito', this.contentList)
@@ -134,6 +150,7 @@ for (let i = 0; i < orquideum.length; i++) {
               </h4>
               <h5>$${orquideum[i].precio}</h5>
               <input placeholder="Cantidad" value="0" class="form-control form-control-rounded" type="number" id="input${orquideum[i].id}">
+              <div id="errorInputCant${orquideum[i].id}" ></div>
             </div>
             <div id="cardFooter" class="card-footer">
               <button type="button" class="btn btn-primary" onclick="carrito.addToCarrito(orquideum[${i}])">Comprar</button>

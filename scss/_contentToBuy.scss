@@ -11,6 +11,11 @@
 .payFormContainer {
     width: 80%;
     margin-top: 10px;
+    margin-bottom: 0 !important;
+
+    p {
+        margin-bottom: 0 !important;
+    }
 }
 
 .paymentLegend {
@@ -61,6 +66,12 @@
     &__item {
         margin-bottom:1em;
 
+        &__cantidad {
+            float: left;
+            margin-right: 10px;
+            font-weight: 600;  
+            font-size: 0.9em;
+        }
         &__genero {
             font-weight:600;
 	        font-size: 0.9em;
