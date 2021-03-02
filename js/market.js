@@ -121,6 +121,23 @@ let orquideum = [
   new Orchid( 8, 'Odontocidium', 'Susan-Keller', 1800, 7, "imagenes/odonto-SusanKeller.jpg" )
 ];
 
+fetch("https://drive.google.com/file/d/1O8YuxwYeIkZwbLFMp3SCph0IjTx9Pp_q/view?usp=sharing").then((resp) => {
+  return resp.json();
+}).then((value) => {
+  console.log('value', value)
+}).catch( (error) => console.error(error))
+$(document).ready( () => {
+  //$.get('./data/orquideas.json', (data, status) => {
+    //console.log('data', data)})
+  
+  $.ajax({
+    url: 'https://github.com/araimundo362/orquideum/blob/[main|master]/db.json',
+    dataType: 'json',
+    success: (response) => {
+      console.log('response', response)
+    }
+  });
+})
 let carrito;
 
 if(localStorage.getItem('carrito') !== null) {
@@ -295,3 +312,7 @@ function setFilterState(filterArray, priceFilterArray) {
   
     document.getElementById('contentContainer').appendChild(newDiv).innerHTML = filterItems;
 }
+
+$('#searchBook').click(() => {
+
+})
