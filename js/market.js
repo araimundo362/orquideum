@@ -108,52 +108,27 @@ class Carrito {
   }
 }
 
-/******************************************************************************************************** */
-// orquideum y carrito, Variables principales del ecommerce
-let orquideum = [
-  new Orchid( 1 ,'Cattleya', 'Lodiguezzi', 2499, 7, "imagenes/Cat-Lodiguesi.jpg"),
-  new Orchid( 2 , 'Dendrobium', 'Nobile', 1849, 2, "imagenes/dendrobium-nobile.jpg"),
-  new Orchid( 3 ,'Laelia', 'Tenebrosa', 2000, 3, "imagenes/Laelia-tenebrosa.jpg"),
-  new Orchid( 4, 'Cymbidium', 'Briggitte-Bardot', 3599, 1, "imagenes/cymbidium-BriggitteBardot.jpg" ),
-  new Orchid( 5, 'Cattleya', 'Little-Toshie', 720, 10, "imagenes/cat-LittleToshie.jpg" ),
-  new Orchid( 6, 'Cattleya', 'Scholfeldana', 1299, 1,"imagenes/cat-scholfeldana.jpg" ),
-  new Orchid( 7, 'Cattleya', 'Sophroniti-Cernua', 4999, 6 ,"imagenes/cat-sophronitiCernua.jpg"),
-  new Orchid( 8, 'Odontocidium', 'Susan-Keller', 1800, 7, "imagenes/odonto-SusanKeller.jpg" )
-];
+let orquideum = [];
 
-fetch("https://drive.google.com/file/d/1O8YuxwYeIkZwbLFMp3SCph0IjTx9Pp_q/view?usp=sharing").then((resp) => {
-  return resp.json();
-}).then((value) => {
-  console.log('value', value)
-}).catch( (error) => console.error(error))
-$(document).ready( () => {
-  //$.get('./data/orquideas.json', (data, status) => {
-    //console.log('data', data)})
-  
-  $.ajax({
-    url: 'https://github.com/araimundo362/orquideum/blob/[main|master]/db.json',
+$(document).ready( async () => {
+
+  await $.ajax({
+    url: 'https://api.jsonbin.io/b/60413f479342196a6a6d9651',
     dataType: 'json',
+    headers: {
+      "secret-key": "$2b$10$GJFvEiIuG3XoL/o3FEbvRefks0ZPU/k.KqreGqOuTaCOLOcBD8yZm"
+    },
     success: (response) => {
       console.log('response', response)
+      for(let i=0; i<response.length; i++) {
+        orquideum.push(new Orchid(response[i].id, response[i].genero, response[i].especie, response[i].precio, response[i].stock, response[i].imagen))
+      }
     }
   });
-})
-let carrito;
+  console.log('orqsResponse', orquideum);
 
-if(localStorage.getItem('carrito') !== null) {
-  let content = JSON.parse(localStorage.getItem('carrito')).contentList;
-  let prevTotal = 0;
-  for(i=0; i < content.length ; i++) {
-    prevTotal += content[i].precio
-  }
-  carrito = new Carrito(content, prevTotal);
-} else {
-  carrito = new Carrito([], 0);
-}
-
-
-// Generacion del contenido HTML  de nuestra pagina. 
-let item = ``;
+  // Generacion del contenido HTML  de nuestra pagina una vez obtenido los datos del server. 
+  let item = ``;
 
 for (let i = 0; i < orquideum.length; i++) {
   if (orquideum[i].stock > 0) {
@@ -181,9 +156,7 @@ for (let i = 0; i < orquideum.length; i++) {
 
 $('#menu').html(item);
 
-/************************************************************************************************************************************ */
-// Filtros
-// Se armo un filtro por genero, y precio.
+// Armo la seccion de filtros una vez obtenidos los datos del sv.
 let filters = ``;
 let filterPrices = ``;
 let auxGen = [];
@@ -222,6 +195,23 @@ filterPrices += `
 // Agrego las opciones de filtro
 $('#filtersName').html(filters);
 $('#filtersPrice').html(filterPrices);
+})
+
+console.log('orqsResponse fuera del document ready', orquideum);
+let carrito;
+
+if(localStorage.getItem('carrito') !== null) {
+  let content = JSON.parse(localStorage.getItem('carrito')).contentList;
+  let prevTotal = 0;
+  for(i=0; i < content.length ; i++) {
+    prevTotal += content[i].precio
+  }
+  carrito = new Carrito(content, prevTotal);
+} else {
+  carrito = new Carrito([], 0);
+}
+
+
 //Lista filtrada
 let filterList = [];
 
@@ -313,6 +303,33 @@ function setFilterState(filterArray, priceFilterArray) {
     document.getElementById('contentContainer').appendChild(newDiv).innerHTML = filterItems;
 }
 
-$('#searchBook').click(() => {
+function checkForOrchid(orq, ar) {
+  for (i=0; i < ar.length; i++) {
+    if (ar[i].genero === orq.genero) {
+      return true;
+    }
+  }
+  return false;
+} 
 
-})
+/*$.ajax({
+        url: 'https://api.mercadopago.com/checkout/preferences?access_token=TUACCESTOKENACA',
+        type: 'POST',
+        data: JSON.stringify({
+            "items": [
+                {
+                    "title": "Producto",
+                    "description": "Líquido 60ml",
+                    "quantity": 1,
+                    "currency_id": "ARS",
+                    "unit_price": 10.0
+                }
+            ]
+        }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        success : function(data){
+            console.info(data);
+        }
+    });*/
