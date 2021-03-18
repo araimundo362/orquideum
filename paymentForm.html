@@ -7,7 +7,7 @@
     <title>Document</title>
 
     <link rel="stylesheet" href="css/styles.css">
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 </head>
@@ -99,41 +99,15 @@
                         placeholder="Telefono"
                         autocomplete="off"
                       />
-                      <div id="phoneErrorAlert"></div>
                     </div>
 
                     <div class="form-group myFormGroup payFormContainer">
                       <select class="form-control" id="selectPayment">
-                        <option selected>Tarjeta*</option>
-                        <option value="VISA">VISA</option>
-                        <option value="MASTERCARD">MASTERCARD</option>
-                        <option value="NATIVA">NATIVA</option>
-                        <option value="NARANJA">NARANJA</option>
                       </select>
                       <div id="paymentErrorAlert"></div>
                     </div>
 
-                    <div class="form-group myFormGroup payFormContainer">
-                      <input
-                        required
-                        id="inputPayNumber"
-                        class="form-control form-control-rounded inputWidth"
-                        placeholder="Numero*"
-                        autocomplete="off"
-                      />
-                      <div id="payNumberErrorAlert"></div>
-                    </div>
-
-                    <div class="form-row payFormContainer">
-                      <div class="col" style="padding-left: 0 !important;">
-                        <input id="inputMonth" required type="number" class="form-control form-control-rounded" placeholder="MM">
-                        <div id="monthErrorAlert"></div>
-                      </div>
-                      <div class="col">
-                        <input id="inputYear" required type="number" class="form-control form-control-rounded" placeholder="AA">
-                        <div id="yearErrorAlert"></div>
-                      </div>
-                    </div>
+                    <div id="divContainerInputs" style="display: flex; justify-content: center; width: 100%; align-items: center; flex-direction: column;"></div>
 
               </form>
             </div>
@@ -144,6 +118,7 @@
         <button type="button" class="btn btn-success btn-lg" id="submitButton">Comprar</button>
         <div id="successMessage"></div>
       </div>
+      <div id="modalDiv"></div>
     </main>
 
     <footer class="footer">
@@ -163,7 +138,7 @@
       </ul>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>

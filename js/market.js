@@ -11,7 +11,7 @@ class Orchid {
     this.precio = precio;
     this.stock = stock;
     this.id = id;
-    this.imagen = img; // Agrego un id para poder remover exactamente una orquidea del carrito si se desea.
+    this.imagen = img; 
   }
   
   isAvailable(cant) {
@@ -45,35 +45,29 @@ class Carrito {
       }
       this.total = this.total + cant * orq.precio;
       orq.minusStock(cant); 
-      localStorage.setItem('carrito', JSON.stringify(carrito)); 
-      let alertSuccess = `
-      <div class="alert alert-success" role="alert" style="margin-top: 15px">
-        <strong>Confirmado!</strong> Hemos agregado exitosamente el elemento al carrito.
-      </div>
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      let successAdd = `
+        <p class="text-center">Hemos agregado ${orq.genero} ${orq.especie} al carrito!<p>
       `
-      $('#alertContainer').html(alertSuccess);
-      $('#errorMsg').remove();
+      $(`#successModalTxt${orq.id}`).html(successAdd);
+      $(`#modal${orq.id}Confirm`).modal('show'); 
+      $(`#errorInputCant${orq.id}`).remove();
     } else {
-      let alertError = ``
       if (cant == 0) {
-        alertError = `
+        let alertError = `
           <div class="errorMsg" style="margin-top: 15px" id="errorMsg">
             Por favor, debe agregar al menos 1 elemento al carrito.
           </div>
       `
       $(`#errorInputCant${orq.id}`).html(alertError);
       } else {
-        alertError = `
-        <div class="alert alert-danger" role="alert" style="margin-top: 15px">
-          <strong>Oh No! </strong> Nos quedamos sin stock! Intente comprar mas tarde.
-        </div>
-      `
-      $('#alertContainer').html(alertError);
+        let errorP = `
+        <p class="text-center">Nos quedamos sin stock! Intente comprar mas tarde.<p>
+        `
+        $(`#errorTxtModal${orq.id}`).html(errorP);
+        $(`#errorModal${orq.id}`).modal('show');
       }
     }
-
-    console.log('carrito', this.contentList)
-    console.log('total', this.total)
   }
 
   removeFromCarrito(orq) {
@@ -90,17 +84,18 @@ class Carrito {
       this.total = this.total - orq.precio; 
       orq.plusStock();
       localStorage.setItem('carrito', JSON.stringify(carrito));
-    } else {
-      let alertError = `
-        <div class="alert alert-danger" role="alert" style="margin-top: 15px">
-          Error! La planta no fue agregada al carrito.
-        </div>
+      let successRemove = `
+        <p class="text-center">Se ha sacado una ${orq.genero} ${orq.especie} del carrito <p>
       `
-      $('#alertContainer').html(alertError);
+      $(`#successModalTxt${orq.id}`).html(successRemove);
+      $(`#modal${orq.id}Confirm`).modal('show');
+    } else {
+      let errorTxt = `
+        <p class="text-center">Error. La planta no fue agregada al carrito<p>
+      `
+      $(`#errorTxtModal${orq.id}`).html(errorTxt);
+      $(`#errorModal${orq.id}`).modal('show');
     }
-
-    console.log('carrito', this.contentList)
-    console.log('total', this.total)
   }
 
   getTotal() {
@@ -109,6 +104,14 @@ class Carrito {
 }
 
 let orquideum = [];
+
+const closeConfirmModal = (id) => {
+  $(`#modal${id}Confirm`).modal('hide'); 
+}
+
+const closeErrorModal = (id) => {
+  $(`#errorModal${id}`).modal('hide'); 
+}
 
 $(document).ready( async () => {
 
@@ -119,13 +122,11 @@ $(document).ready( async () => {
       "secret-key": "$2b$10$GJFvEiIuG3XoL/o3FEbvRefks0ZPU/k.KqreGqOuTaCOLOcBD8yZm"
     },
     success: (response) => {
-      console.log('response', response)
       for(let i=0; i<response.length; i++) {
         orquideum.push(new Orchid(response[i].id, response[i].genero, response[i].especie, response[i].precio, response[i].stock, response[i].imagen))
       }
     }
   });
-  console.log('orqsResponse', orquideum);
 
   // Generacion del contenido HTML  de nuestra pagina una vez obtenido los datos del server. 
   let item = ``;
@@ -148,15 +149,50 @@ for (let i = 0; i < orquideum.length; i++) {
               <button type="button" class="btn btn-primary" onclick="carrito.addToCarrito(orquideum[${i}])">Comprar</button>
               <button type="button" class="btn btn-primary" onclick="carrito.removeFromCarrito(orquideum[${i}])">Sacar del carrito</button>
             </div>
+            <div id="modal${orquideum[i].id}Confirm" class="modal" role="dialog" tabindex="-1">
+	        <div class="modal-dialog modal-confirm">
+		        <div class="modal-content">
+			        <div class="modal-header">
+				        <div class="icon-box">
+					        <i class="material-icons">&#xE876;</i>
+				        </div>				
+				        <h4 class="modal-title w-100">Confirmado!</h4>	
+			        </div>
+			      <div class="modal-body" id="successModalTxt${orquideum[i].id}">
+			      </div>
+			      <div class="modal-footer">
+				        <button class="btn btn-success btn-block" data-dismiss="modal" onclick="closeConfirmModal(${orquideum[i].id})">OK</button>
+			      </div>
+		      </div>
+	      </div>
+      </div>
           </div>
         </div>
+        <div id="errorModal${orquideum[i].id}" class="modal">
+	<div class="modal-dialog modal-confirm redErrorModal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="icon-box redErrorModal">
+					<i class="material-icons">&#xE5CD;</i>
+				</div>				
+				<h4 class="modal-title w-100">UPS!</h4>	
+			</div>
+			<div class="modal-body" id="errorTxtModal${orquideum[i].id}">
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-danger btn-block redErrorModal" data-dismiss="modal" onclick="closeErrorModal(${orquideum[i].id})">OK</button>
+			</div>
+		</div>
+	</div>
+</div>     
         `;
   }
 }
 
 $('#menu').html(item);
-
+/****************************************** */
 // Armo la seccion de filtros una vez obtenidos los datos del sv.
+
 let filters = ``;
 let filterPrices = ``;
 let auxGen = [];
@@ -197,7 +233,6 @@ $('#filtersName').html(filters);
 $('#filtersPrice').html(filterPrices);
 })
 
-console.log('orqsResponse fuera del document ready', orquideum);
 let carrito;
 
 if(localStorage.getItem('carrito') !== null) {
@@ -214,10 +249,20 @@ if(localStorage.getItem('carrito') !== null) {
 
 //Lista filtrada
 let filterList = [];
+let priceFilteredList = [];
 
-function checkForOrchid(orq, ar) {
+const checkForOrchid = (orq, ar) => {
   for (i=0; i < ar.length; i++) {
     if (ar[i].genero === orq.genero) {
+      return true;
+    }
+  }
+  return false;
+} 
+
+const checkForIdOrchid = (orq, ar) => {
+  for (i=0; i < ar.length; i++) {
+    if (ar[i].id === orq.id) {
       return true;
     }
   }
@@ -231,17 +276,20 @@ function filterByName(orq) {
   } else {
     filterList = filterList.concat(orquideum.filter((orch) => orch.genero === orq.genero));
   }
+
+  console.log('Filtrando en filterByName, estos son los resultados', filterList, priceFilteredList)
 // Llamo a esta funcion para setear el estado filtrado (teniendo en cuenta el otro filtro)
   setFilterState(filterList, priceFilteredList);
 };
 
-let priceFilteredList = [];
 let filterItems = ``;
 
 function filterByPrice(desde, hasta) {
   //Filtro desde el arreglo original las que esten en el precio.
   priceFilteredList = orquideum.filter((orq) => desde <= orq.precio && orq.precio <= hasta);
   // Llamo a esta funcion para setear el estado filtrado (teniendo en cuenta el otro filtro)
+
+  console.log('Filtrando en filterByPrice, estos son los resultados', filterList, priceFilteredList)
   setFilterState(filterList, priceFilteredList);
 }
 
@@ -251,9 +299,12 @@ function setFilterState(filterArray, priceFilterArray) {
   // Hago una interseccion entre los arreglos en caso de tener distintos filtros. 
   // Si alguno es vacio, "devuelvo" el otro. 
   // Si los 2 son vacios, volvemos al estado original
-  if(priceFilterArray.length && filterArray.length) {
+
+  console.log('Arreglo filtro de nombre', filterArray);
+  console.log('Arreglo filtro precio', priceFilterArray)
+  if(priceFilterArray.length > 0 && filterArray.length > 0) {
     for(i=0; i<filterArray.length; i++) {
-      if(priceFilterArray.includes(filterArray[i])) {
+      if(checkForIdOrchid(filterArray[i], priceFilterArray)) { //priceFilterArray.includes(filterArray[i])
         newFilterState.push(filterArray[i]);
       }
     }     
@@ -269,6 +320,7 @@ function setFilterState(filterArray, priceFilterArray) {
     }
   }
 
+  console.log('nuevo estado a filtrar', newFilterState)
   filterItems = ``;
     for (let i = 0; i < newFilterState.length; i++) {
       if (newFilterState[i].stock > 0) {
@@ -293,9 +345,7 @@ function setFilterState(filterArray, priceFilterArray) {
       }
     }
 
-    //Borro el elemento menu del DOM.
     document.getElementById('menu').remove();
-    //Creo el contenido con el nuevo listado.
     let newDiv = document.createElement('div');
     newDiv.setAttribute('class', 'itemList');
     newDiv.id = 'menu';
@@ -303,7 +353,7 @@ function setFilterState(filterArray, priceFilterArray) {
     document.getElementById('contentContainer').appendChild(newDiv).innerHTML = filterItems;
 }
 
-function checkForOrchid(orq, ar) {
+/*function checkForOrchid(orq, ar) {
   for (i=0; i < ar.length; i++) {
     if (ar[i].genero === orq.genero) {
       return true;
@@ -311,25 +361,4 @@ function checkForOrchid(orq, ar) {
   }
   return false;
 } 
-
-/*$.ajax({
-        url: 'https://api.mercadopago.com/checkout/preferences?access_token=TUACCESTOKENACA',
-        type: 'POST',
-        data: JSON.stringify({
-            "items": [
-                {
-                    "title": "Producto",
-                    "description": "Líquido 60ml",
-                    "quantity": 1,
-                    "currency_id": "ARS",
-                    "unit_price": 10.0
-                }
-            ]
-        }),
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        success : function(data){
-            console.info(data);
-        }
-    });*/
+*/
