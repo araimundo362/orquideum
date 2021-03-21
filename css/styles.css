@@ -394,10 +394,25 @@ a:hover {
 
 .market {
   display: flex;
-  flex-wrap: wrap;
-  padding: 20px; }
+  padding-top: 35px;
+  padding-left: 20px; }
   .market__img {
     height: 300px !important; }
+  .market__aside {
+    width: 15%; }
+    .market__aside h3 {
+      border-bottom: thin solid darkgray; }
+    .market__aside__filterContainer {
+      display: flex;
+      justify-content: space-between; }
+    .market__aside__buttonResetContainer {
+      margin-top: 15px; }
+
+.noResults {
+  width: 100%;
+  text-align: center; }
+  .noResults h2 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; }
 
 .fixedButton {
   position: fixed !important;
@@ -408,6 +423,150 @@ a:hover {
   display: flex;
   flex-wrap: wrap;
   width: 90%; }
+
+.errorMsg {
+  color: red;
+  font-size: 10px; }
+
+.modal-confirm {
+  color: #636363;
+  width: 325px;
+  font-size: 14px; }
+
+.modal-confirm .modal-content {
+  padding: 20px;
+  border-radius: 5px;
+  border: none; }
+
+.modal-confirm .modal-header {
+  border-bottom: none;
+  position: relative; }
+
+.modal-confirm h4 {
+  text-align: center;
+  font-size: 26px;
+  margin: 30px 0 -15px; }
+
+.modal-confirm .form-control, .modal-confirm .btn {
+  min-height: 40px;
+  border-radius: 3px; }
+
+.modal-confirm .close {
+  position: absolute;
+  top: -5px;
+  right: -5px; }
+
+.modal-confirm .modal-footer {
+  border: none;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 13px; }
+
+.modal-confirm .icon-box {
+  color: #fff;
+  position: absolute;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: -70px;
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+  z-index: 9;
+  background: #82ce34;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1); }
+
+.modal-confirm .icon-box i {
+  font-size: 58px;
+  position: relative;
+  top: 3px; }
+
+.modal-confirm.modal-dialog {
+  margin-top: 80px; }
+
+.modal-confirm .btn {
+  color: #fff;
+  border-radius: 4px;
+  background: #82ce34;
+  text-decoration: none;
+  transition: all 0.4s;
+  line-height: normal;
+  border: none; }
+
+.modal-confirm .btn:hover, .modal-confirm .btn:focus {
+  background: #6fb32b;
+  outline: none; }
+
+.trigger-btn {
+  display: inline-block;
+  margin: 100px auto; }
+
+.redErrorModal {
+  background: #ef513a !important; }
+
+.mainContent {
+  display: flex; }
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin: 10px; }
+
+.payFormContainer {
+  width: 80%;
+  margin-top: 10px;
+  margin-bottom: 0 !important; }
+  .payFormContainer p {
+    margin-bottom: 0 !important; }
+
+.paymentLegend {
+  align-self: flex-start;
+  margin-left: 20px; }
+
+.summaryContainer {
+  display: flex;
+  margin-top: 15px;
+  width: 50%; }
+  .summaryContainer__products {
+    background-color: #f7fbff;
+    padding: 25px;
+    margin-left: 5px;
+    width: 100%;
+    height: fit-content;
+    border-top-style: groove;
+    border-top-color: chartreuse; }
+  .summaryContainer__title {
+    font-size: 1em;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.8em;
+    font-weight: 600;
+    padding-bottom: 8px; }
+  .summaryContainer__price {
+    float: right;
+    font-weight: 600;
+    font-size: 0.9em; }
+  .summaryContainer__total {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    padding-top: 19px;
+    font-weight: 600;
+    line-height: 1; }
+  .summaryContainer__item {
+    margin-bottom: 1em; }
+    .summaryContainer__item__cantidad {
+      float: left;
+      margin-right: 10px;
+      font-weight: 600;
+      font-size: 0.9em; }
+    .summaryContainer__item__genero {
+      font-weight: 600;
+      font-size: 0.9em;
+      margin-bottom: 0; }
+    .summaryContainer__item__especie {
+      font-size: 0.8em;
+      opacity: 0.6; }
 
 body {
   background-color: antiquewhite !important; }

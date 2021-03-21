@@ -1,0 +1,86 @@
+.mainContent {
+    display: flex;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+
+    margin: 10px;
+}
+.payFormContainer {
+    width: 80%;
+    margin-top: 10px;
+    margin-bottom: 0 !important;
+
+    p {
+        margin-bottom: 0 !important;
+    }
+}
+
+.paymentLegend {
+    align-self: flex-start;
+    margin-left: 20px;
+}
+
+.summaryContainer {
+    display: flex;
+    margin-top: 15px;
+
+    width: 50%;
+
+    &__products {
+        background-color: #f7fbff;
+        padding: 25px;
+        margin-left: 5px;
+
+        width: 100%;
+        height: fit-content;
+
+        border-top-style: groove;
+        border-top-color: chartreuse;
+    }
+
+    &__title {
+        font-size: 1em;
+	    border-bottom: 1px solid rgba(0,0,0,0.1);
+	    margin-bottom: 0.8em;
+	    font-weight: 600;
+	    padding-bottom: 8px;
+    }
+
+    &__price {
+        float: right;
+	    font-weight: 600;
+	    font-size: 0.9em;
+    }
+
+    &__total {
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+	    margin-top: 10px;
+	    padding-top: 19px;
+	    font-weight: 600;
+	    line-height: 1;
+    }
+
+    &__item {
+        margin-bottom:1em;
+
+        &__cantidad {
+            float: left;
+            margin-right: 10px;
+            font-weight: 600;  
+            font-size: 0.9em;
+        }
+        &__genero {
+            font-weight:600;
+	        font-size: 0.9em;
+            margin-bottom: 0;
+        }
+
+        &__especie {
+            font-size:0.8em;
+	        opacity:0.6;
+        }
+    }
+}
