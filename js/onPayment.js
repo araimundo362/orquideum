@@ -1,29 +1,3 @@
-
-// TODO: Integrar mercado Pago. Y hacer un ajax con las tarjetas 
-
-/*const mercadopago = require ('mercadopago');
-mercadopago.configure({
-  access_token: 'PROD_ACCESS_TOKEN'
-});
-
-let preference = {
-  items: [
-    {
-      title: 'Mi producto',
-      unit_price: 100,
-      quantity: 1,
-    }
-  ]
-};
-
-mercadopago.preferences.create(preference)
-.then(function(response){
-// Este valor reemplazará el string "<%= global.id %>" en tu HTML
-  global.id = response.body.id;
-}).catch(function(error){
-  console.log(error);
-});*/
-
 /****************************************************************************** */
 /* Funciones Auxiliares para control de formulario */
 
@@ -57,7 +31,6 @@ const checkMail = (mail) => {
 }
 
 const checkPayment = (payNumber) => {
-  console.log('payment check', payNumber);
   switch (payNumber.length) {
     case 0:
       return 'Debe completar este campo para completar la compra';
@@ -201,11 +174,9 @@ $(document).ready( async () => {
       "secret-key": "$2b$10$GJFvEiIuG3XoL/o3FEbvRefks0ZPU/k.KqreGqOuTaCOLOcBD8yZm"
     },
     success: (response) => {
-      console.log('response', response)
       paymentsOp = response;
     }
   });
-    console.log('paymentsOp', paymentsOp)
     let carrito = JSON.parse(localStorage.getItem('carrito')).contentList;
     let total = 0;
     for( let i=0; i < carrito.length ; i++) {
@@ -247,9 +218,36 @@ $(document).ready( async () => {
 })
 
 $('#selectPayment').change( (val) => {
-  console.log('value change select', val.target.value);
   val.target.value == 5 ? $('#divContainerInputs').html(cbuInput) : $('#divContainerInputs').html(tarjetInputs);
 })
+
+const successOperation = (payment) => {
+  $('#inputName').css("border-color", "green");
+  $('#nameErrorAlert').remove();
+  $('#inputDni').css("border-color", "green");
+  $('#dniErrorAlert').remove();
+  $('#inputAge').css("border-color", "green");
+  $('#ageErrorAlert').remove();
+  $('#inputEmail').css("border-color", "green");
+  $('#mailErrorAlert').remove();
+  
+  $('#selectPayment').css("border-color", "green");
+  $('#paymentErrorAlert').remove();
+
+  if (payment == 5) {
+    $('#inputCBUNumber').css("border-color", "green");
+    $('#cbuNumberErrorAlert').remove();
+  } else {
+    $('#inputPayNumber').css("border-color", "green");
+    $('#payNumberErrorAlert').remove();
+    $('#inputMonth').css("border-color", "green");
+    $('#monthErrorAlert').remove();
+    $('#inputYear').css("border-color", "green");
+    $('#yearErrorAlert').remove();
+  }
+
+  $('#successModal').modal('show');
+}
 
 $('#submitButton').click( () => {
   let nombre = $('#inputName').val();
@@ -266,13 +264,14 @@ $('#submitButton').click( () => {
     idsPayment.push(paymentsOp[i].id);
   }
 
-  console.log('condicion', idsPayment.includes(tarjeta))
-  console.log('tarjet preIf value', tarjeta, typeof tarjeta, idsPayment)
   if (idsPayment.includes(tarjeta) && checkNombre(nombre) && checkAge(age) && checkDni(doc) === 'OK' && checkMail(mail) === 'OK') {
+    // Verifico el medio de pago. 
     if(tarjeta !== 5) {
+      //Si es tarjeta de credito y esta correcto termino la compra.
       if(checkPayment(num) === 'OK' && checkExpirationMonth(expirationMonth) === 'OK' && checkExpirationYear(expirationYear) === 'OK') {
-        $('#successModal').modal('show');
+        successOperation(tarjeta);
       } else {
+        //Si hay error, muestro en pantalla el mismo
         if(checkPayment(num) !== 'OK') {
           $('#inputPayNumber').css("border-color", "red");
           let paymentNumError = `
@@ -304,7 +303,7 @@ $('#submitButton').click( () => {
       // Verifico el numero de cbu
       let cbuNumber = $('#inputCBUNumber').val();
       if (checkCbu(cbuNumber) === 'OK') {
-        $('#successModal').modal('show');
+        successOperation(tarjeta);
       } else {
         $('#inputCBUNumber').css("border-color", "red");
         let cbuError = `
@@ -315,32 +314,6 @@ $('#submitButton').click( () => {
         $('#cbuNumberErrorAlert').html(cbuError);
       }
     }
-
-    /*let preference = {
-      items: [
-        {
-          title: 'Mi producto',
-          unit_price: 100,
-          quantity: 1,
-        }
-      ]
-    };
-    let preference = { items: []};
-
-    for(let i=0; i< carrito.length ; i++ ) {
-      preference.items.push({
-        title: `${carrito[i].genero} ${carrito[i].especie}`,
-        unit_price: `${carrito[i].precio}`,
-        quantity: 1
-      })
-    }
-    
-    mercadopago.preferences.create(preference).then(function(response){
-// Este valor reemplazará el string "<%= global.id %>" en tu HTML
-      global.id = response.body.id;
-    }).catch(function(error){
-        console.log(error);
-    });*/
   } else {
     if (!idsPayment.includes(tarjeta)) {
       $('#selectPayment').css("border-color", "red");
@@ -389,25 +362,3 @@ $('#submitButton').click( () => {
     }
   }
 })
-
-/*$.ajax({
-        url: 'https://api.mercadopago.com/checkout/preferences?access_token=TUACCESTOKENACA',
-        type: 'POST',
-        data: JSON.stringify({
-            "items": [
-                {
-                    "title": "Producto",
-                    "description": "Líquido 60ml",
-                    "quantity": 1,
-                    "currency_id": "ARS",
-                    "unit_price": 10.0
-                }
-            ]
-        }),
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        success : function(data){
-            console.info(data);
-        }
-    });*/

@@ -30,6 +30,8 @@ class Orchid {
 /************************************************************************************************************************** */
 // Clase carrito: LLevamos un array para el contenido. Y un valor que es el total del mismo.
 //Metodos : addToCarrito agrega N elementos al carrito. removeFromCarrito saca un elemento seleccionado del carrito.
+
+
 class Carrito {
   constructor(content, total) {
     this.contentList = content;
@@ -99,8 +101,39 @@ class Carrito {
   }
 
   getTotal() {
-    alert(`El total es: ${this.total}`)
+    let modalNotify = `
+      <div id="modalNotifyTotal" class="modal" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-confirm">
+          <div class="modal-content">
+            <div class="modal-header">			
+              <h4 class="modal-title w-100">Total: ${carrito.total}</h4>	
+            </div>
+              <div class="modal-footer">
+                <button class="btn btn-success btn-block" data-dismiss="modal" onclick="closeNotifyModal()">OK</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+`
+
+    $('#notifyTotal').html(modalNotify);
+    $('#modalNotifyTotal').modal('show');
   }
+}
+
+let carrito;
+
+if(localStorage.getItem('carrito') !== null) {
+  let content = JSON.parse(localStorage.getItem('carrito')).contentList;
+  let prevTotal = 0;
+  for(i=0; i < content.length ; i++) {
+    prevTotal += content[i].precio
+  }
+  carrito = new Carrito(content, prevTotal);
+} else {
+  carrito = new Carrito([], 0);
 }
 
 let orquideum = [];
@@ -111,6 +144,10 @@ const closeConfirmModal = (id) => {
 
 const closeErrorModal = (id) => {
   $(`#errorModal${id}`).modal('hide'); 
+}
+
+const closeNotifyModal = () => {
+  $('#modalNotifyTotal').modal('hide');
 }
 
 $(document).ready( async () => {
@@ -189,7 +226,9 @@ for (let i = 0; i < orquideum.length; i++) {
   }
 }
 
+
 $('#menu').html(item);
+
 /****************************************** */
 // Armo la seccion de filtros una vez obtenidos los datos del sv.
 
@@ -203,7 +242,7 @@ for(i=0; i < orquideum.length; i++) {
     filters += `
                   <div class="market__aside__filterContainer">
                       <h6>${orquideum[i].genero}</h6>
-                      <input id="input${orquideum[i].especie}" type="checkbox" onchange="filterByName(orquideum[${i}])">
+                      <input id="input${orquideum[i].genero}" type="checkbox" onchange="filterByGender(orquideum[${i}].genero)">
                   </div>
               `
   }
@@ -226,6 +265,10 @@ filterPrices += `
                       <h6>Desde 3000$</h6>
                       <input id="inputPrice4" type="radio" name="filterPrice" onchange="filterByPrice(3000,99999)">
                   </div>
+
+                  <div class="market__aside__buttonResetContainer">
+                    <button type="button" class="btn btn-primary" onclick="cleanFilterPrice()">Limpiar filtro</button>
+                  </div>
               `
 
 // Agrego las opciones de filtro
@@ -233,95 +276,70 @@ $('#filtersName').html(filters);
 $('#filtersPrice').html(filterPrices);
 })
 
-let carrito;
-
-if(localStorage.getItem('carrito') !== null) {
-  let content = JSON.parse(localStorage.getItem('carrito')).contentList;
-  let prevTotal = 0;
-  for(i=0; i < content.length ; i++) {
-    prevTotal += content[i].precio
-  }
-  carrito = new Carrito(content, prevTotal);
-} else {
-  carrito = new Carrito([], 0);
-}
-
 
 //Lista filtrada
 let filterList = [];
 let priceFilteredList = [];
 
-const checkForOrchid = (orq, ar) => {
-  for (i=0; i < ar.length; i++) {
-    if (ar[i].genero === orq.genero) {
-      return true;
-    }
-  }
-  return false;
-} 
+const isOrchEquals = (orq1, orq2) => {
+  return orq1.id === orq2.id ? true : false;
+}
 
-const checkForIdOrchid = (orq, ar) => {
-  for (i=0; i < ar.length; i++) {
-    if (ar[i].id === orq.id) {
-      return true;
-    }
-  }
-  return false;
-} 
+const filterByGender = (gen) => {
+  //Verifico si el checkbox esta seleccionado o no para ver si agrego las orquideas correspondientes a la lista filtrada o las elimino de ahi.
+  let inpCheck = $(`#input${gen}`).prop('checked')
 
-function filterByName(orq) {
-  // Me fijo si la orquidea ya fue agregada al filtro o no. En caso positivo la saco del arreglo filtrado y los elementos. En caso negativo, la agrego y filtro
-  if (checkForOrchid(orq, filterList)) {
-    filterList = filterList.filter((orch) => orch.genero !== orq.genero);
+  if (inpCheck) {
+    filterList = filterList.concat(orquideum.filter((orq) => orq.genero == gen))
   } else {
-    filterList = filterList.concat(orquideum.filter((orch) => orch.genero === orq.genero));
-  }
+    filterList = filterList.filter((orq) => orq.genero !== gen)
+   }
 
-  console.log('Filtrando en filterByName, estos son los resultados', filterList, priceFilteredList)
-// Llamo a esta funcion para setear el estado filtrado (teniendo en cuenta el otro filtro)
+  // Llamo a esta funcion para setear el estado filtrado (teniendo en cuenta el otro filtro)
   setFilterState(filterList, priceFilteredList);
 };
 
 let filterItems = ``;
 
-function filterByPrice(desde, hasta) {
+const filterByPrice = (desde, hasta) => {
   //Filtro desde el arreglo original las que esten en el precio.
   priceFilteredList = orquideum.filter((orq) => desde <= orq.precio && orq.precio <= hasta);
   // Llamo a esta funcion para setear el estado filtrado (teniendo en cuenta el otro filtro)
-
-  console.log('Filtrando en filterByPrice, estos son los resultados', filterList, priceFilteredList)
   setFilterState(filterList, priceFilteredList);
 }
 
 let newFilterState = [];
 
-function setFilterState(filterArray, priceFilterArray) {
+const setFilterState = (filterArray, priceFilterArray) => {
   // Hago una interseccion entre los arreglos en caso de tener distintos filtros. 
   // Si alguno es vacio, "devuelvo" el otro. 
   // Si los 2 son vacios, volvemos al estado original
+  newFilterState = []
 
-  console.log('Arreglo filtro de nombre', filterArray);
-  console.log('Arreglo filtro precio', priceFilterArray)
-  if(priceFilterArray.length > 0 && filterArray.length > 0) {
-    for(i=0; i<filterArray.length; i++) {
-      if(checkForIdOrchid(filterArray[i], priceFilterArray)) { //priceFilterArray.includes(filterArray[i])
-        newFilterState.push(filterArray[i]);
+  let i,j;
+  if(filterArray.length > 0 && priceFilterArray.length > 0) {
+
+    for(i=0; i< filterArray.length; i++) {
+      for(j=0; j< priceFilterArray.length; j++) {
+        if(isOrchEquals(filterArray[i],priceFilterArray[j])) {
+          newFilterState.push(filterArray[i]);
+        }
       }
-    }     
+    }
   } else {
     if (!filterArray.length) {
       newFilterState = priceFilterArray;
     }
     if(!priceFilterArray.length) {
-      newFilterState = filterArray;
-    }
+        newFilterState = filterArray;
+      }
     if(!priceFilterArray.length && !filterArray.length){
-      newFilterState = orquideum;
+        newFilterState = orquideum;
     }
-  }
+  } 
 
-  console.log('nuevo estado a filtrar', newFilterState)
   filterItems = ``;
+  if (newFilterState.length > 0) {
     for (let i = 0; i < newFilterState.length; i++) {
       if (newFilterState[i].stock > 0) {
         filterItems += `
@@ -344,6 +362,13 @@ function setFilterState(filterArray, priceFilterArray) {
             `;
       }
     }
+  } else {
+    filterItems += `
+      <div class="noResults">
+          <h2>Lo sentimos, no hemos encontrado orquideas que cumplan con las busquedas solicitadas! </h2>
+      </div>
+    `
+  }
 
     document.getElementById('menu').remove();
     let newDiv = document.createElement('div');
@@ -353,12 +378,12 @@ function setFilterState(filterArray, priceFilterArray) {
     document.getElementById('contentContainer').appendChild(newDiv).innerHTML = filterItems;
 }
 
-/*function checkForOrchid(orq, ar) {
-  for (i=0; i < ar.length; i++) {
-    if (ar[i].genero === orq.genero) {
-      return true;
+const cleanFilterPrice = () => {
+  for(let i=1; i <= 4; i++) {
+    if($(`#inputPrice${i}`).prop('checked')) {
+      $(`#inputPrice${i}`).prop('checked', false)
     }
   }
-  return false;
-} 
-*/
+  priceFilteredList = [];
+  setFilterState(filterList, priceFilteredList)
+}
